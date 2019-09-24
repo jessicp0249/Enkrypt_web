@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="stylesheet.css">
+<!--
+    <script type="text/javascript">
+        "use strict";
+        function encrypt() {
+            if(is_valid()) {
+                
+                var formatted = format(document.getElementById("user_input").value);
+                output(formatted);                
+            }
+            
+        }
+
+        function is_valid() {
+            var text = document.getElementById("user_input").value;
+            if (text != "") return true;
+            else return false;
+        }
+        
+        function to_symbols(message) {
+            // for each character in message...
+                // 
+            // Convert text to html representation
+        }
+        
+        function format(text) {
+            // Assign first character of text to result and capitalize it
+            var result = text.charAt(0).toUpperCase();
+            // Get length of text
+            var max = text.size();
+            // make all characters in text lowercase
+            text = text.toLowerCase();
+            var i = 1;
+            
+            // Skip first character in text. For each character that follows...
+            for(i=1; i<max; i++) {
+                // If character is a letter followed by a space...
+                if(text.charAt(i).match([a-z]) && text.charAt(i-1).match(\s)) {
+                   // Add capitalized character to result
+                   result+=text.charAt(i).toUpperCase();
+                   }
+                // If character is the same as previous, add double symbol
+                else if(text.charAt(i)==text.charAt(i-1)) {
+                        result+=":";
+                    }
+                // If character is not a space, add to result
+                else if(!text.charAt(i).match(\s)) {
+                        result+=text.charAt(i);
+                        }
+            }
+            return result;
+        }
+        
+        function display_as_img() {
+            
+        }
+        
+        function output(text) {
+            var display;
+            // Scramble text and display each symbol as text
+            // for each character in text, 
+            document.getElementById("output").innerHTML=display;
+        }
+    </script>
+-->
+    
+</head>
+<body>
+    <header>
+        <!-- Logo image -->
+        <h1>Create coded messages</h1>
+    </header>
+    <aside>
+        <article id="howto">
+            <h2>How to use</h2>
+            <p>Type a message into the text box below and click the "EnKrypt!" button to encode it.<br>Click the "Clear" button to clear the text box.  Refresh this page to clear the coded output.<br>Use the Display options to change the size and colors of the coded output.</p>
+            <ul>
+                For best results, use only the following:
+                <li>Letters <strong>A-Z</strong> (lowercase or uppercase)</li>
+                <li>Numbers <strong>0-9</strong></li>
+                <li>Periods, exclamation points, question marks (<strong>. ! ?</strong>)</li>
+                <li>Single and double quotes (<strong>' "</strong>)</li>
+            </ul>
+        </article>
+    </aside>
+    <main>
+                <aside>
+            <div id="display_options">
+                <h3>Display Options</h3>
+                <ul class="size_options">
+                    <h5>SIZE</h5>
+                    <li>
+                        <button type="button" id="smaller">Smaller</button>
+                    </li>
+                    <li id="selected_size">
+                        <button type="button" id="default_size">Default</button>
+                    </li>
+                    <li>
+                        <button type="button" id="bigger">Bigger</button>
+                    </li>
+                    <li>
+                        <button type="button" id="biggest">Biggest</button>
+                    </li>
+                </ul>
+                <ul class="color_options">
+                    <h5>COLOR</h5>
+                    <li id="selected_color">
+                        <button type="button">
+                            <img src="images/display_default.svg" alt="Default colors">
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                        <img src="images/display_contrast.svg" alt="High contrast">
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <img src="images/display_soft_light.svg" alt="Soft colors">
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <img src="images/display_bnw.svg" alt="Black and white">
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div id="output_wrapper">
+                <p>Encrypted message will appear here.</p>
+                <noscript>Warning: this page uses Javascript.</noscript>
+            </div>
+        </aside>
+        <div id="input_wrapper">
+        	<textarea id="user_input" placeholder="Enter a message and click Enkrypt.">Test test test</textarea>
+            <div id="input_button_wrapper">
+                <button id="enkrypt_btn" type="button" title="Display encoded version of text">EnKrypt!</button>
+                <button id="clear_btn" type="button" title="Clear all entered text">Clear</button>
+            </div>
+        </div>
+
+    </main>
+    <footer>
+        <h4>About</h4>
+        <p>Blah blah blah</p>
+    </footer>
+
+<!--
+    <fieldset class="colorOpts">
+        <legend>Display Options</legend>
+        <input type="radio" name="scheme" id="default" value="default">
+        <label for="default">Default colors</label><br>
+        <svg version="1.1" class="colordemo" id="colorDefault" 
+            xmlns="http://www.w3.org/2000/svg"    
+            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 648 216" style="enable-background:new 0 0 648 216;" 
+              xml:space="preserve">
+            <rect width="648" height="216"/>
+            <circle class="def1" cx="114" cy="108" r="72"/>
+            <circle class="def2" cx="324" cy="108" r="72"/>
+            <circle class="def3" cx="534" cy="108" r="72"/>
+        </svg>
+        <br>
+        <input type="radio" name="scheme" id="contrast" value="contrast">
+        <label for="contrast">High Contrast</label><br>
+        <input type="radio" name="scheme" id="bnw" value="bnw">
+        <label for="bnw">Black and White</label>
+    </fieldset>
+    
+    <div>
+    <input id="input" accept="text/plain">
+    <button onclick="enktypt()">Encrypt</button>
+    <div id="container">
+        <div id="encrypted">
+        </div>
+    </div>
+    </div>
+-->
+    <script type="text/javascript" src="enkrypt.js"></script>
+</body>
+</html>
