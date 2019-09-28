@@ -211,16 +211,19 @@ footer {
     /* Color settings */
 /* Default colors */
 
-.yellow {
-    background-color: #ff6;
+.Y {
+    color: #ff6;
+   /* background-color: #ff6; */
 }
 
-.red {
-    background-color: #c33;
+.R {
+    color: #c33;
+    /* background-color: #c33; */
 }
 
-.blue {
-    background-color: #3cc;
+.B {
+    color: #3cc;
+    /* background-color: #3cc; */
 }
 
 .bg {
@@ -229,15 +232,18 @@ footer {
 
 
 /* High contrast */
-.y_con {
+.Y_con {
+    color: #ffc;
     background-color: #ffc;
 }
 
-.r_con {
+.R_con {
+    color: #900;
     background-color: #900;
 }
 
-.b_con {
+.B_con {
+    color: #399;
     background-color: #399;
 }
 
@@ -246,18 +252,21 @@ footer {
 }
 
 /* Soft colors */
-.y_soft {
+.Y_soft {
+    color: #ffc;
     background-color: #ffc;
     border: 1px solid #630;
 }
 
-.r_soft {
+.R_soft {
+    color: #900;
     background-color: #900;
     border: 1px solid #303;
     
 }
 
-.b_soft {
+.B_soft {
+    color: #3cc;
     background-color: #3cc;
     border: 1px solid #006;
 }
@@ -267,17 +276,20 @@ footer {
 }
 
 /* Black and white */
-.y_bw {
+.Y_bw {
+    color: #fff;
     background-color: #fff;
     border: 1px solid #000;
 }
 
-.r_bw {
+.R_bw {
+    color: #000;
     background-color: #000;
     border: 1px solid #000;
 }
 
-.b_bw {
+.B_bw {
+    color: #666;
     background-color: #666;
     border: 1px solid #000;
 }
