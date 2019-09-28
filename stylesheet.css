@@ -91,7 +91,7 @@ li button img {
 }
 
 textarea {
-    width: 96%;
+    width: 96%;   
     padding: 1em 2%;
     position: relative;
     z-index: 3;
@@ -209,21 +209,25 @@ footer {
 
 
     /* Color settings */
+span {
+    margin: 0;
+    padding: 0.25em;
+}
 /* Default colors */
 
 .Y {
     color: #ff6;
-   /* background-color: #ff6; */
+   /* fill: #ff6; */
 }
 
 .R {
     color: #c33;
-    /* background-color: #c33; */
+    /* fill: #c33; */
 }
 
 .B {
     color: #3cc;
-    /* background-color: #3cc; */
+    /* fill: #3cc; */
 }
 
 .bg {
@@ -234,17 +238,17 @@ footer {
 /* High contrast */
 .Y_con {
     color: #ffc;
-    background-color: #ffc;
+    fill: #ffc;
 }
 
 .R_con {
     color: #900;
-    background-color: #900;
+    fill: #900;
 }
 
 .B_con {
     color: #399;
-    background-color: #399;
+    fill: #399;
 }
 
 .bg_con {
@@ -254,7 +258,7 @@ footer {
 /* Soft colors */
 .Y_soft {
     color: #ffc;
-    background-color: #ffc;
+    fill: #ffc;
     border: 1px solid #630;
 }
 
@@ -267,7 +271,7 @@ footer {
 
 .B_soft {
     color: #3cc;
-    background-color: #3cc;
+    fill: #3cc;
     border: 1px solid #006;
 }
 
@@ -278,23 +282,22 @@ footer {
 /* Black and white */
 .Y_bw {
     color: #fff;
-    background-color: #fff;
+    fill: #fff;
     border: 1px solid #000;
 }
 
 .R_bw {
     color: #000;
-    background-color: #000;
+    fill: #000;
     border: 1px solid #000;
 }
 
 .B_bw {
     color: #666;
-    background-color: #666;
+    fill: #666;
     border: 1px solid #000;
 }
 
 .bg_bw {
     background-color: #ccc;
-    border: 1px solid #000;
 }

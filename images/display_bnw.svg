@@ -3,24 +3,20 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 648 216" style="enable-background:new 0 0 648 216;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#CCCCCB;}
-	.st1{fill:#FFFFFF;}
-	.st2{fill:#666766;}
+	.Y{fill:#CCCCCB;}
+	.B{fill:#FFFFFF;}
+	.R{fill:#666766;}
 </style>
-<rect class="st0" width="648" height="216"/>
-<g id="circle1">
-	<circle class="st1" cx="114" cy="108" r="77"/>
+<rect class="Y" width="648" height="216"/>
+	<circle class="B" cx="114" cy="108" r="77"/>
 	<path d="M114,36c39.8,0,72,32.2,72,72s-32.2,72-72,72s-72-32.2-72-72S74.2,36,114,36 M114,26c-45.2,0-82,36.8-82,82s36.8,82,82,82
 		s82-36.8,82-82S159.2,26,114,26L114,26z"/>
-</g>
-<g id="circle2">
-	<circle class="st2" cx="324" cy="108" r="77"/>
+
+	<circle class="R" cx="324" cy="108" r="77"/>
 	<path d="M324,36c39.8,0,72,32.2,72,72s-32.2,72-72,72s-72-32.2-72-72S284.2,36,324,36 M324,26c-45.2,0-82,36.8-82,82s36.8,82,82,82
 		s82-36.8,82-82S369.2,26,324,26L324,26z"/>
-</g>
-<g id="circle3">
+
 	<circle cx="534" cy="108" r="77"/>
 	<path d="M534,36c39.8,0,72,32.2,72,72s-32.2,72-72,72s-72-32.2-72-72S494.2,36,534,36 M534,26c-45.2,0-82,36.8-82,82s36.8,82,82,82
 		s82-36.8,82-82S579.2,26,534,26L534,26z"/>
-</g>
 </svg>
