@@ -4,6 +4,7 @@
 var color_list = ['Y', 'B', 'R'];
 var size_list = [36, 72, 108, 144];	// Default size is 72
 var double_char = ':';
+var size_mode = size_list[1];	// Set to default
 
 
 // Shorthand function
@@ -221,11 +222,7 @@ function scramble(eString)
 
 var getSymbolWidth = function(unicode)
 {
-	// Get size style, remove all non-numbers, parse integer
-	var width = $("size_styles").innerHTML;
-	width = width.replace(/[^0-9]/g, "");
-	width = parseInt(width);
-
+	var width = size_mode;
 	var max = 'A'.charCodeAt(0);	// First fullsize-character
 	
 	if(unicode < max)
@@ -266,7 +263,7 @@ function symbolToHTML(mySymbol)
 	return output;
 }
 
-
+// Contents = the character to be represented
 var svgNode = function(contents, color)
 {
 	var node = document.createElement("svg");
@@ -378,6 +375,7 @@ var set_size_mode = function(id)
 	else if(id == "biggest")
 		width = size_list[3];
 
+
 	$("size_styles").innerHTML = "svg { width: " + width + "px; }";
 
 	$("size_mode").innerHTML = ": " + $(id).innerHTML;
@@ -417,8 +415,7 @@ window.onload = function()
 	setup_display_options("color_options", set_color_mode);
 	setup_display_options("size_options", set_size_mode);
 
-//	setup_radio_buttons("color_options", set_color_mode);
-//	setup_radio_buttons("size_options", set_size_mode);
+	// Build dictionary of characters and their svg representations
 
 
 // DEBUG
