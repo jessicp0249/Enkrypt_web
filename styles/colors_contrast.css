@@ -1,0 +1,19 @@
+/* High contrast */
+.Y {
+    color: #ffc;
+    fill: #ffc;
+}
+
+.R {
+    color: #900;
+    fill: #900;
+}
+
+.B {
+    color: #399;
+    fill: #399;
+}
+
+.bg {
+    background-color: #000;
+}

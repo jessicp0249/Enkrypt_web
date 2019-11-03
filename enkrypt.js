@@ -1,27 +1,13 @@
+"use strict";
+
 // Global variables
-var num_colors = 3;
-var color_mode = '';
-var size_mode = '';
+var color_list = ['Y', 'B', 'R'];
+var size_list = [36, 72, 108, 144];	// Default size is 72
+var double_char = ':';
 
 
 // Shorthand function
-var $ = function(id)
-{
-	return document.getElementById(id);
-}
-
-// FIXME - Incomplete function
-var set_color_mode = function(button_id)
-{
-	// get selected button
-	var selected = $(button_id);
-	var old = $("selected_color");
-	if (selected != old)
-	{
-		// Remove "selected color" id from old and add to selected
-		// Apply color classes to <span> elements in the output element
-	}
-}
+var $ = function(id) { return document.getElementById(id); }
 
 // Define Symbol object
 function eSymbol(character, modifier, color)
@@ -31,22 +17,35 @@ function eSymbol(character, modifier, color)
 	this.color = color;
 }
 
+// Validation check
+var isValid = function(input, invalid_chars)
+{
+	var validity = false;
+	// If invalid, print message to output div
+	if (input.length == 0 || input.match(invalid_chars))
+	{
+		$('output_wrapper').innerHTML += "<p>For best results, \
+		use the characters listed in the 'How to use' section.</p>";
+	}
+	else
+		validity = true;
+
+	return validity;
+}
+
 // Format string so it can be encoded
 function format_string(raw)
 {
-	// Characters that separate words
-	var dividers = /[\s.!?"]/;
-	// Characters that can be encoded (no whitespace)
+	var dividers = /[\s.!?"]/;	// Characters that separate words
 	var valid_chars = /[a-z0-9.!?'"]/;
 
 	raw = raw.toLowerCase();
 	var formatted = '';
 	var max = raw.length;
 
-// FIXME - Account for "double" modifier
 	for(var i = 0; i < max; i++)
 	{
-		// Capitalize first character and add to string
+		// Capitalize first character
 		if(i == 0)
 			formatted = (raw[i]).toUpperCase();
 		// Capitalize first letter of each word
@@ -57,86 +56,100 @@ function format_string(raw)
 			formatted += raw[i];
 	}
 
-//DEBUG
-//	alert("Formatted: "+formatted+"\nLength: "+formatted.length);
-//DEBUG
-
 	return formatted;
 }
 
 function messageFromString(message)
 {
 	var eString = [];	// Array for eSymbols
+	var current = '';	// Current character in message
+	var size = message.length;
+	// Initialize first character in array
+	eString[0] = new eSymbol(message[0],'','');
+
 	// Convert each character to eSymbol and add to array
-	for(var i = 0; i < message.length; i++)
+	for(var i = 1; i < size; i++)
 	{
-		// Letters and numbers
-		if(message[i].match(/[A-z0-9]/))
+		current = message[i];
+
+		if(current.match(/[A-z]/))
 		{
-			// If not first character in message...
-			if(i > 0)
-				eString[eString.length] = new eSymbol(message[i],'','');
-			// If first, initialize first position in array
+			// If same as previous character, add to last eSymbol
+			if(current.toLowerCase() == message[i-1].toLowerCase())
+				eString[eString.length-1].character += current;
 			else
-				eString[0] = new eSymbol(message[i],'','');
+				eString[eString.length] = new eSymbol(current,'','');
 		}
+		else if(current.match(/[0-9]/))
+			eString[eString.length] = new eSymbol(current,'','');
 		// Punctuation
 		else if(i > 0)	// Add to modifier of previous eSymbol
-			eString[eString.length - 1].modifier += message[i];
+			eString[eString.length - 1].modifier += current;
 		else 	// If no previous exists, create one
-			eString[eString.length] = new Symbol('',message[i],'');
-
+			eString[eString.length] = new Symbol('', current,'');
 	}
 
 	return eString;
 }
 
-// Determine which characters will be which color
+// Determine which characters are what color
 function splitIntoSections(size)
 {
+	var num_colors = color_list.length;
 	var remainder = (size % num_colors);
-	// Minimum section size when splitting up by color
 	var section_size = Math.floor(size / num_colors);
 	// Array contains indexes of first item in each section
 	var indexes = [0, section_size, (2 * section_size)];
 
 	// Distribute remainder among sections
-	// for each 1 in remainder...
+	// for each 1 in remainder, increment the size of a section
 	for(var i = 0; i < remainder; i++)
 	{
-		// for each section in indexes that hasn't 
-		// had a remainder added behind it...
+		// scoot forward first item of all following sections to make room
 		for(var j = i+1; j < num_colors; j++)
-		{
-			// Scoot first item of current section forward
-			// to make room for a remainder in previous section
 			indexes[j]++;
-		}
 	}
 
-
-//DEBUG
-/*
-		var output = "Yellow: "+indexes[0]+"-"+(indexes[1]-1);
-		output+= "\nBlue: "+indexes[1]+"-"+(indexes[2]-1);
-		output+= "\nRed: "+indexes[2]+"-"+(size-1);
-		alert(output);
-*/
-//DEBUG
-
 	return indexes;
+}
+
+// Shifts the given letter the given number of steps
+// Adds duplicate symbol if necessary
+function letter_shift(letter, steps)
+{
+	if(steps == 0 || !letter.match(/[A-z]/))
+		shifted = letter;	// No change
+	else
+	{
+		var duplicates = letter.length-1;
+		letter = letter[0]	// Only use first character
+		
+		var is_capital = (letter == letter.toUpperCase());
+		var shifted = (letter.toLowerCase()).charCodeAt(0) + steps;
+		
+		// Keep within range of lowercase letters
+		var min = 'a'.charCodeAt(0);
+		var max = 'z'.charCodeAt(0);
+		if(shifted > max)
+			shifted = (min - 1) + (shifted - max);
+
+		shifted = String.fromCharCode(shifted);
+		if(is_capital)	// Capitalize if necessary
+			shifted = shifted.toUpperCase();
+
+		for(var i = 0; i < duplicates; i++)
+			shifted += double_char;
+	}
+
+	return shifted;
 }
 
 function colorFromInt(integer)
 {
 	var color = '';
-
-	if(integer == 0)
-		color = 'Y';
-	else if(integer == 1)
-		color = 'B';
-	else if(integer == 2)
-		color = 'R';
+	// if integer is a valid index, get color from list
+	if( integer >= 0 && integer < color_list.length)
+		color = color_list[integer];
 
 	return color;
 }
@@ -144,84 +157,107 @@ function colorFromInt(integer)
 function assign_colors(eString)
 {
 	var size = eString.length;
+	var all_colors = color_list.length;
+	var color_num = 0;
 	// Switch colors for each character
 	for(var i = 0; i < size; i++)
-		eString[i].color = colorFromInt(i % num_colors);
+	{
+		color_num = i % all_colors;
+		eString[i].color = colorFromInt(color_num);
+		eString[i].character = 
+			letter_shift(eString[i].character, color_num * all_colors);
+	}
+}
+
+function fix_string_end(eString)
+{
+	var size = eString.length;
+	var remainder = size % color_list.length;
+	// Index of symbol that should be at the end
+	var endcap = (size-1) - remainder;
+	var temp;
+	// Swap endcap with element after it until it reaches the end
+	while(endcap < (size-1))
+	{
+		temp = eString[endcap];
+		eString[endcap] = eString[endcap+1];
+		eString[endcap+1] = temp;
+		endcap++;
+	}
 }
 
 function scramble(eString)
 {
 	var size = eString.length;
-	if( size <= num_colors)
-	{
-		// Don't scramble if there's only one character per color
-		assign_colors(eString);
-		return eString;
-	}
-
+	var all_colors = color_list.length;
 	var mixed = new Array(size);
-	// divide eString into equal sections of color
-	var sections = splitIntoSections(size);
-	// Target index in eString, number of characters used from each
-	//  section, and color of current character
-	var target = 0, offset = 0, color = 0;
 
-
-//FIXME
-/*
-	Ok so it works fine as long as eString is a multiple of 3 (num_colors),
-	but otherwise it sticks a duplicate of the last yellow character right
-	after the first character?
-*/
-
-	for(var i = 0; i < size; i++)
+	// Don't scramble if there's only one character per color
+	if( size <= all_colors)
+		mixed = eString;
+	else
 	{
-		color = i % num_colors;
-		target = sections[color] + offset;
-		mixed[i] = eString[target];
+		// Target index in eString; number of chars used from each
+		// section; color of current character
+		var target = 0, offset = 0, color = 0;
+		var sections = splitIntoSections(size);
 
-		if(num_colors - 1 == color)
-			offset++;
+		for(var i = 0; i < size; i++)
+		{
+			color = i % all_colors;
+			target = sections[color] + offset;
+			mixed[i] = eString[target];
+
+			if(all_colors - 1 == color)
+				offset++;
+		}
 	}
-
-//DEBUG
-/*
-	var output = '';
-	for(var i = 0; i<size; i++)
-		output += mixed[i].character;
-	alert(output);
-	*/
-//DEBUG
 
 	assign_colors(mixed);
+	fix_string_end(mixed);
 	return mixed;
 }
 
+
+var getSymbolWidth = function(unicode)
+{
+	// Get size style, remove all non-numbers, parse integer
+	var width = $("size_styles").innerHTML;
+	width = width.replace(/[^0-9]/g, "");
+	width = parseInt(width);
+
+	var max = 'A'.charCodeAt(0);	// First fullsize-character
+	
+	if(unicode < max)
+	{
+		width /= 2;	// Punctuation (half-size)
+		if(unicode == 46 || unicode == 58)
+			width /= 2;	// Quarter-size symbols
+	}
+
+	return width;
+}
 
 // Get HTML representation of the given eSymbol object
 function symbolToHTML(mySymbol)
 {
 	var tag_open = "<span class=";
 	var tag_close = "</span>";
-	var classes = "\"" + mySymbol.color + color_mode + "\">";
+	var classes = "\"" + mySymbol.color + "\">";
 	var punctuation = "";
 	// Character portion
-	var output = tag_open + classes + mySymbol.character;
-	// Add "double" modifiers
+	var output = tag_open + classes + mySymbol.character + tag_close;
+	
+	// Punctuation/modifier portion
 	var size = 0;
 	if(mySymbol.modifier != undefined)
 		size = mySymbol.modifier.length;
 	for(var i = 0; i < size; i++)
-	{
-		if(mySymbol.modifier[i] == "-")
-			output += mySymbol.modifier[i];
-		else
-			punctuation += mySymbol.modifier[i];
-	}
+		punctuation += mySymbol.modifier[i];
 
 	if(punctuation != "")
 	{
-		classes = "\"" + colorFromInt(0) + color_mode + "\">";
+		classes = "\"" + colorFromInt(0) + "\">";
 		output += tag_open + classes + punctuation + tag_close;
 	}
 
@@ -230,22 +266,65 @@ function symbolToHTML(mySymbol)
 	return output;
 }
 
-// Validation check
-function isValid(input, invalid_chars)
+
+var svgNode = function(contents, color)
 {
-	var validity = false;
-	// If invalid, print message to output div
-	if (input.length == 0 || input.match(invalid_chars))
+	var node = document.createElement("svg");
+	node.setAttribute("class", color);
+	node.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+	// viewbox="minX minY width height" (numbers)
+	node.setAttribute("viewbox", "0 0");
+	
+
+	node.innerHTML = contents;
+
+	return node;
+}
+
+// FIXME: complete function
+var textToSvg = function(text, color)
+{
+	// FIXME: Get name of directory containing svg files
+	var source_dir = 'SVG';
+	var nodes = [];	// Array of nodes to return
+	var file, node;
+
+	for(var i = 0; i < text.length; i++)
 	{
-		$('output_wrapper').innerHTML += "<p>For best results, \
-		use the characters listed in the 'How to use' section.</p>";
+		// Svg files are labeled by unicode number
+		file = source_dir + '/' + text.charCodeAt(0) + '.svg';
+		// FIXME: Get inner html contents for an SVG of the given unicode
+		// FIXME: Create svgNode for the given unicode
+		// FIXME: Assign class: color to node
+		// FIXME: Add node to array
 	}
-	else
+	
+	return nodes;
+}
+
+// Create nodes from array of eSymbols
+var symbolsToSvg = function(myString)
+{
+	var nodes = [];	// Array of arrays
+	var size = myString.length;
+	var mySymbol, color, text;
+
+	// for each symbol in eString...
+	for(var i=0; i < size; i++)
 	{
-		validity = true;
+		mySymbol = myString[i];
+		color = mySymbol.color;
+
+		text = mySymbol.character;
+		if(text != undefined && text != '')
+			nodes[nodes.length] = textToSvg(text, color);
+
+		text = mySymbol.modifier;
+		if(text != undefined && text != '')
+			nodes[nodes.length] = textToSvg(text, color);
 	}
 
-	return validity;
+	return nodes;
 }
 
 // "EnKrypt!" button
@@ -256,15 +335,71 @@ function encrypt_input()
 	{
 		// Clear previous contents of output wrapper
 		$("output_wrapper").innerHTML = '';
+
 		var message = format_string(raw);
-
-		// Convert string to an array of eSymbols
 		var eString = messageFromString(message);
-
 		eString = scramble(eString);
+
+		// FIXME: Get array of nodes from eString
+		// Add nodes to output_wrapper
+
 		// Convert each eSymbol to HTML and add to document
 		for(var i = 0; i < eString.length; i++)
 			$("output_wrapper").innerHTML += symbolToHTML(eString[i]);
+
+		$("user_input").focus();
+	}
+}
+
+
+
+var set_color_mode = function(id)
+{
+	var style = $("color_styles");	// Color stylesheet
+	style.href = "styles/" + id + ".css";	// Change url
+
+	// Change option displayed in "selected_options" span for color mode
+//	var name = $(id).getFirstChild.getAttribute("alt");
+	var name = $(id).firstElementChild.getAttribute("alt");
+	$("color_mode").innerHTML = ": " + name;
+}
+
+// FIXME: untested function.
+var set_size_mode = function(id)
+{
+	var width;
+
+	if(id == "smaller")
+		width = size_list[0];
+	else if(id == "default_size")
+		width = size_list[1];
+	else if(id == "bigger")
+		width = size_list[2];
+	else if(id == "biggest")
+		width = size_list[3];
+
+	$("size_styles").innerHTML = "svg { width: " + width + "px; }";
+
+	$("size_mode").innerHTML = ": " + $(id).innerHTML;
+}
+
+var setup_display_options = function(classname, handler)
+{
+	var options = document.getElementsByClassName(classname);
+	var size = options.length;
+
+	for(var i=0; i < size; i++)
+	{
+		options[i].onclick = function(evt) {
+			// Prevent default action of anchor element
+			if(!evt) { evt = window.event; }
+			if(evt.preventDefault)
+				evt.preventDefault();
+			else
+				evt.returnValue = false;
+			// Send to set_color_mode/set_size_mode function
+			handler(this.id);
+		}
 	}
 }
 
@@ -276,8 +411,24 @@ function clear_output()
 
 window.onload = function()
 {
+	$("user_input").focus();
 	$("clear_btn").onclick = clear_output;
 	$("enkrypt_btn").onclick = encrypt_input;
+	setup_display_options("color_options", set_color_mode);
+	setup_display_options("size_options", set_size_mode);
+
+//	setup_radio_buttons("color_options", set_color_mode);
+//	setup_radio_buttons("size_options", set_size_mode);
+
+
+// DEBUG
+/*
+	var output = "A: " + 'A'.charCodeAt(0) + '\n';
+	output += "Z: " + 'Z'.charCodeAt(0) + '\n';
+	output += "a: " + 'a'.charCodeAt(0) + '\n';
+	output += "z: " + 'z'.charCodeAt(0) + '\n';
+	alert(output);
+*/
 }
 
 // Each ESymbol has width of 1

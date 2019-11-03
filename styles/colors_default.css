@@ -1,0 +1,20 @@
+/* Default colors */
+
+.Y {
+    color: #ff6;
+   /* fill: #ff6; */
+}
+
+.R {
+    color: #c33;
+    /* fill: #c33; */
+}
+
+.B {
+    color: #3cc;
+    /* fill: #3cc; */
+}
+
+.bg {
+    background-color: #000;
+}

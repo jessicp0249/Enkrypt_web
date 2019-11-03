@@ -1,0 +1,23 @@
+/* Soft colors */
+.Y {
+    color: #ffc;
+    fill: #ffc;
+    border: 1px solid #630;
+}
+
+.R {
+    color: #900;
+    background-color: #900;
+    border: 1px solid #303;
+    
+}
+
+.B {
+    color: #3cc;
+    fill: #3cc;
+    border: 1px solid #006;
+}
+
+.bg {
+    background-color: #fff;
+}
