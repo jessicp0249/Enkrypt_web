@@ -219,22 +219,6 @@ function scramble(eString)
 	return mixed;
 }
 
-
-var getSymbolWidth = function(unicode)
-{
-	var width = size_mode;
-	var max = 'A'.charCodeAt(0);	// First fullsize-character
-	
-	if(unicode < max)
-	{
-		width /= 2;	// Punctuation (half-size)
-		if(unicode == 46 || unicode == 58)
-			width /= 2;	// Quarter-size symbols
-	}
-
-	return width;
-}
-
 // Get HTML representation of the given eSymbol object
 function symbolToHTML(mySymbol)
 {
@@ -263,66 +247,6 @@ function symbolToHTML(mySymbol)
 	return output;
 }
 
-// Contents = the character to be represented
-var svgNode = function(contents, color)
-{
-	var node = document.createElement("svg");
-	node.setAttribute("class", color);
-	node.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-	// viewbox="minX minY width height" (numbers)
-	node.setAttribute("viewbox", "0 0");
-	
-
-	node.innerHTML = contents;
-
-	return node;
-}
-
-// FIXME: complete function
-var textToSvg = function(text, color, selector)
-{
-	// Name of directory containing svg files
-	var source_dir = 'https://jessicp0249.github.io/Enkrypt_web/SVG/';
-	var nodes = [];	// Array of nodes to return
-	var file, node;
-
-	for(var i = 0; i < text.length; i++)
-	{
-		// Build svg filename (files labeled by unicode number)
-		file = source_dir + text.charCodeAt(0) + '.svg';
-		// FIXME: Create new node
-		// FIXME: Assign file contents to node
-		// FIXME: Assign class: color to node
-		// FIXME: Add node to array
-	}
-	
-	// FIXME: output nodes to selected element
-}
-
-// Create nodes from array of eSymbols
-var symbolsToSvg = function(myString, selector)
-{
-	var nodes = [];	// Array of arrays
-	var size = myString.length;
-	var mySymbol, color, text;
-
-	// for each symbol in eString...
-	for(var i=0; i < size; i++)
-	{
-		mySymbol = myString[i];
-		color = mySymbol.color;
-
-		text = mySymbol.character;
-		if(text != undefined && text != '')
-			nodes[nodes.length] = textToSvg(text, color, selector);
-
-		text = mySymbol.modifier;
-		if(text != undefined && text != '')
-			nodes[nodes.length] = textToSvg(text, color, selector);
-	}
-
-}
-
 // "EnKrypt!" button
 function encrypt_input() 
 {
@@ -336,10 +260,6 @@ function encrypt_input()
 		var eString = messageFromString(message);
 		eString = scramble(eString);
 
-		// FIXME: Get array of nodes from eString
-		// Add nodes to output_wrapper
-
-
 		// Convert each eSymbol to HTML and add to document
 		for(var i = 0; i < eString.length; i++)
 			$("output_wrapper").innerHTML += symbolToHTML(eString[i]);
@@ -347,8 +267,6 @@ function encrypt_input()
 		$("user_input").focus();
 	}
 }
-
-
 
 var set_color_mode = function(id)
 {
@@ -415,17 +333,6 @@ window.onload = function()
 	setup_display_options("color_options", set_color_mode);
 	setup_display_options("size_options", set_size_mode);
 
-	// Build dictionary of characters and their svg representations
-
-
-// DEBUG
-/*
-	var output = "A: " + 'A'.charCodeAt(0) + '\n';
-	output += "Z: " + 'Z'.charCodeAt(0) + '\n';
-	output += "a: " + 'a'.charCodeAt(0) + '\n';
-	output += "z: " + 'z'.charCodeAt(0) + '\n';
-	alert(output);
-*/
 }
 
 // Each ESymbol has width of 1
