@@ -318,7 +318,7 @@ var outputSvg = function(eString, outSource) {
 		for(var j = 0; j < text.length; j++)
 		{
 			id = text.charCodeAt(i);
-			$(outSource).appendChild(document.createElement("svg"));
+			$(outSource).append("<svg></svg>");
 			$(outSource + " svg:last-child").load(filename + " " + id);
 		
 		}
