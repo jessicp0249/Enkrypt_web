@@ -146,6 +146,37 @@ function splitIntoSections(size)
 	return indexes;
 };
 
+// Shifts the given letter the given number of steps
+// Adds duplicate symbol if necessary
+/*
+var letterShift = function(letter, steps)
+{
+	var shifted = letter;
+	var duplicates = letter.length - 1;
+	var min = 'a'.charCodeAt(0);
+	var max = 'z'.charCodeAt(0);
+
+	if(steps != 0 && letter.match(/[A-z]/))
+	{
+		letter = letter[0]	// Only use first character
+		shifted = (letter.toLowerCase()).charCodeAt(0) + steps;
+
+		if(shifted > max)	// keep within range of lowercase letters
+			shifted = (shifted - max) + (min - 1);
+
+		shifted = String.fromCharCode(shifted);
+
+		if(letter == letter.toUpperCase())	// Capitalize if necessary
+			shifted = shifted.toUpperCase();
+
+		for(var i = 0; i < duplicates; i++)
+			shifted += double_char;
+	}
+
+	return shifted;
+};
+*/
+
 var  colorFromInt = function(integer)
 {
 	var color = '';
@@ -251,6 +282,31 @@ var symbolToHTML = function(mySymbol)
 	return output;
 };
 
+/*
+// FIXME: incomplete function
+var textToSvg = function(text, color)
+{
+	// Name of directory containing svg files
+	var filename = '/images/svg_list.html';
+	var nodes = [];	// Array of nodes to return
+	var node, id;
+
+	for(var i = 0; i < text.length; i++)
+	{
+		id = "#" + text.charCodeAt(i);
+		node = document.createElement("svg");
+		// FIXME: Assign file contents to node
+		node.load(filename + " " + id);
+		// FIXME: Assign class: color to node
+		node.attr("class", color);
+		// FIXME: Add node to array
+		nodes.append(node);
+	}
+	
+	return nodes;
+};
+*/
+
 var outputSvg = function(eString, outSource) {
 	var size = eString.length;
 	var id, text, color;
@@ -262,7 +318,7 @@ var outputSvg = function(eString, outSource) {
 		for(var j = 0; j < text.length; j++)
 		{
 			id = text.charCodeAt(i);
-			$(outSource).appendChild(document.createElement("svg"));
+			$(outSource).append("<svg></svg>");
 			$(outSource + " svg:last-child").load(filename + " " + id);
 		
 		}
