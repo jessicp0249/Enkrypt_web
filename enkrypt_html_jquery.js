@@ -313,13 +313,14 @@ var outputSvg = function(eString, outSource) {
 	for(var i = 0; i < size; i++)
 	{
 		text = eString[i].encodedCharacter();
-		color = eString[i].color;
+		color = colorFromInt(eString[i].color);
 
 		for(var j = 0; j < text.length; j++)
 		{
-			id = text.charCodeAt(i);
+			id = text.charCodeAt(j);
 			$(outSource).append("<svg></svg>");
 			$(outSource + " svg:last-child").load(filename + " " + id);
+			$(outSource + " svg:last-child").attr("class", color);
 		
 		}
 /*
@@ -395,3 +396,4 @@ $(document).ready(function()
 // Each ESymbol has width of 1
 // Each modifier has width of 1/2 or 1/4
 // Modifiers must be on the same line as the previous ESymbol
+
