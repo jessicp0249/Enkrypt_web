@@ -282,6 +282,7 @@ var symbolToHTML = function(mySymbol)
 	return output;
 };
 
+/*
 // FIXME: incomplete function
 var textToSvg = function(text, color)
 {
@@ -304,6 +305,7 @@ var textToSvg = function(text, color)
 	
 	return nodes;
 };
+*/
 
 var outputSvg = function(eString, outSource) {
 	var size = eString.length;
@@ -329,7 +331,7 @@ var outputSvg = function(eString, outSource) {
 		}
 */
 	}
-}
+};
 
 // "EnKrypt!" button
 var encryptInput = function() {
