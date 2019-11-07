@@ -12,7 +12,31 @@ function eSymbol(character, modifier, color)
 	this.character = character,
 	this.modifier = modifier,
 	this.color = color;
-}
+	this.encodedCharacter = function() {
+		var steps = this.color * color_list.length;
+		var result = this.character[0];
+		var duplicates = this.character.length - 1;
+
+		if(steps != 0 && this.character[0].match(/[A-z]/))
+		{
+			result = result.toLowerCase().charCodeAt(0) + steps;
+			// keep within range of lowercase letters
+			if(result > 'z'.charCodeAt(0))
+				result = (result - 'z'.charCodeAt(0)) +
+				('a'.charCodeAt(0) - 1);
+
+			result = String.fromCharCode(result);
+			// Capitalize if necessary
+			if(this.character[0] == this.character[0].toUpperCase())
+				result = result.toUpperCase();
+		}
+		// add double character(s) if necessary
+		for(var i = 0; i < duplicates; i++)
+			result += double_char;
+
+		return result;
+	};	// end encodedCharacter
+};
 
 // Validation check for user input.
 // input: string to be checked for validity
@@ -26,7 +50,7 @@ var isValid = function(input, invalid_chars)
 		validity = true;
 
 	return validity;
-}
+};
 
 // Format string so it can be encoded.
 // raw: string to be formatted
@@ -63,7 +87,7 @@ function format_string(raw)
 	}
 
 	return formatted;
-}
+};
 
 function messageFromString(message)
 {
@@ -80,8 +104,9 @@ function messageFromString(message)
 
 		if(current.match(/[A-z]/))
 		{
-			// If same as previous character, add to last eSymbol
-			if(current.toLowerCase() == message[i-1].toLowerCase())
+			// If same as previous character (in same word), add to last eSymbol
+			if(current == current.toLowerCase() && 
+				current.toLowerCase() == message[i-1].toLowerCase())
 				eString[eString.length-1].character += current;
 			else
 				eString[eString.length] = new eSymbol(current,'','');
@@ -96,7 +121,7 @@ function messageFromString(message)
 	}
 
 	return eString;
-}
+};
 
 // Determine which characters are what color
 // size: number of symbols in message
@@ -119,15 +144,16 @@ function splitIntoSections(size)
 	}
 
 	return indexes;
-}
+};
 
 // Shifts the given letter the given number of steps
 // Adds duplicate symbol if necessary
+/*
 var letterShift = function(letter, steps)
 {
 	var shifted = letter;
 	var duplicates = letter.length - 1;
-	var min = 'a'.charCodeAt(0) - 1;
+	var min = 'a'.charCodeAt(0);
 	var max = 'z'.charCodeAt(0);
 
 	if(steps != 0 && letter.match(/[A-z]/))
@@ -136,7 +162,7 @@ var letterShift = function(letter, steps)
 		shifted = (letter.toLowerCase()).charCodeAt(0) + steps;
 
 		if(shifted > max)	// keep within range of lowercase letters
-			shifted = (shifted - max) + min;
+			shifted = (shifted - max) + (min - 1);
 
 		shifted = String.fromCharCode(shifted);
 
@@ -148,7 +174,8 @@ var letterShift = function(letter, steps)
 	}
 
 	return shifted;
-}
+};
+*/
 
 var  colorFromInt = function(integer)
 {
@@ -158,9 +185,9 @@ var  colorFromInt = function(integer)
 		color = color_list[integer];
 
 	return color;
-}
+};
 
-var fix_string_end = function(eString)
+var fixStringEnd = function(eString)
 {
 	var size = eString.length;
 	var remainder = size % color_list.length;
@@ -175,7 +202,7 @@ var fix_string_end = function(eString)
 		eString[endcap + 1] = temp;
 		endcap++;
 	}
-}
+};
 
 var assign_colors = function(eString)
 {
@@ -186,11 +213,11 @@ var assign_colors = function(eString)
 	for(var i = 0; i < size; i++)
 	{
 		color_num = i % all_colors;
-		eString[i].color = colorFromInt(color_num);
-		eString[i].character = 
-			letterShift(eString[i].character, color_num * all_colors);
+		eString[i].color = color_num;
+//		eString[i].character = 
+//			letterShift(eString[i].character, color_num * all_colors);
 	}
-}
+};
 
 var scramble = function(eString)
 {
@@ -220,27 +247,30 @@ var scramble = function(eString)
 	}
 
 	assign_colors(mixed);
-	fix_string_end(mixed);
+	fixStringEnd(mixed);
 	return mixed;
-}
+};
 
 // Get HTML representation of the given eSymbol object
 var symbolToHTML = function(mySymbol)
 {
 	var tag_open = "<span class=";
 	var tag_close = "</span>";
-	var classes = "\"" + mySymbol.color + "\">";
+	var classes = "\"" + colorFromInt(mySymbol.color) + "\">";
 	var punctuation = "";
 	// Character portion
-	var output = tag_open + classes + mySymbol.character + tag_close;
+	var output = tag_open + classes + mySymbol.encodedCharacter() + tag_close;
 	
 	// Punctuation/modifier portion
+	if(mySymbol.modifier != undefined)
+		punctuation = mySymbol.modifier;
+	/*
 	var size = 0;
 	if(mySymbol.modifier != undefined)
 		size = mySymbol.modifier.length;
 	for(var i = 0; i < size; i++)
 		punctuation += mySymbol.modifier[i];
-
+	*/
 	if(punctuation != "")
 	{
 		classes = "\"" + colorFromInt(0) + "\">";
@@ -250,12 +280,53 @@ var symbolToHTML = function(mySymbol)
 	output+= "\n";
 
 	return output;
+};
+
+// FIXME: incomplete function
+var textToSvg = function(text, color)
+{
+	// Name of directory containing svg files
+	var filename = 'https://jessicp0249.github.io/Enkrypt_web/images/svg_list.html';
+	var nodes = [];	// Array of nodes to return
+	var node, id;
+
+	for(var i = 0; i < text.length; i++)
+	{
+		id = "#" + text.charCodeAt(i);
+		node = document.createElement("svg");
+		// FIXME: Assign file contents to node
+		node.load(filename + " " + id);
+		// FIXME: Assign class: color to node
+		node.attr("class", color);
+		// FIXME: Add node to array
+		nodes.append(node);
+	}
+	
+	return nodes;
+};
+
+var outputSvg = function(eString, outSource) {
+	var size = eString.length;
+	var char_nodes, mod_nodes, text, color;
+	for(var i = 0; i < size; i++)
+	{
+		text = eString[i].encodedCharacter();
+		color = eString[i].color;
+		sym_nodes = textToSvg(text, color);
+		outSource.appendChild(sym_nodes);
+
+		text = eString[i].modifier;
+		if(text != undefined && text != '')
+		{
+			sym_nodes = textToSvg(text, 0);
+			$(outSource).appendChild(sym_nodes);
+		}
+	}
 }
 
 // "EnKrypt!" button
-var encrypt_input = function() 
-{
-	var raw = $("#user_input").html();
+var encryptInput = function() {
+	var raw = $("#user_input").val();
 	var message = format_string(raw);
 
 	if(message != '')
@@ -263,49 +334,36 @@ var encrypt_input = function()
 		// Build and scramble message
 		var eString = scramble(messageFromString(message));
 		$("#output_wrapper").html('');	// Clear previous output
+
+		outputSvg(eString, "#output_wrapper");
+/*
 		// Convert each eSymbol to HTML and add to document
 		for(var i = 0; i < eString.length; i++)
-			$("#output_wrapper").append(symbolToHTML(eString[i]));	
+			$("#output_wrapper").append(symbolToHTML(eString[i]));
+*/	
 	}
 
 	$("#user_input").focus();
-}
-
-var setup_display_options = function(classname, handler)
-{
-	var options = $("a." + classname);
-	var size = options.length;
-
-	for(var i=0; i < size; i++)
-	{
-		options[i].click(function(evt) {
-			// Prevent default action of anchor element
-			evt.preventDefault();
-			handler($(this).attr("id"));
-		});
-	}
 };
 
 $(document).ready(function() 
 {
-	$("#clear_btn").click(function() 
-	{
+	$("#clear_btn").click(function() {
 		$("#user_input").html("");
 	});	// end clear button click
 
-	$("#enkrypt_btn").click(encrypt_input);
+	$("#enkrypt_btn").click(encryptInput);
 
-	setup_display_options("color_options", function(id)
-	{
+	$(".color_options").click(function() {
+		var id = $(this).attr("id");
 		$("#color_styles").attr("href", "styles/" + id + ".css");
 		// Change option displayed in "selected_options" span for color mode
-		var name = $("#" + id + "> img").attr("alt");
+		var name = $(this).children("img").attr("alt");
 		$("#color_mode").html(": " + name);
-	});	// end setup color options
-
-	// FIXME: untested function.
-	setup_display_options("size_options", function(id)
-	{
+	});	// end click for color options
+	
+	$(".size_options").click(function() {
+		var id = $(this).attr("id");
 		var width;
 
 		if(id == "smaller")
@@ -317,9 +375,10 @@ $(document).ready(function()
 		else if(id == "biggest")
 			width = size_list[3];
 
+		size_mode = width;
 		$("#size_styles").html("svg { width: " + width + "px; }");
 		$("#size_mode").html(": " + $("#" + id).html());
-	});	// end setup size options
+	});	// end click for size options
 
 	$("#user_input").focus();
 });	// end ready

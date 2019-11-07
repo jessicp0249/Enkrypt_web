@@ -129,6 +129,10 @@ li a img {
     margin: 2%;
 }
 
+svg {
+    float: left;
+}
+
 svg.half {
     width: 50%;
 }
