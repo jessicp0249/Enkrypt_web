@@ -286,7 +286,7 @@ var symbolToHTML = function(mySymbol)
 var textToSvg = function(text, color)
 {
 	// Name of directory containing svg files
-	var filename = 'https://jessicp0249.github.io/Enkrypt_web/images/svg_list.html';
+	var filename = '/images/svg_list.html';
 	var nodes = [];	// Array of nodes to return
 	var node, id;
 
@@ -307,20 +307,27 @@ var textToSvg = function(text, color)
 
 var outputSvg = function(eString, outSource) {
 	var size = eString.length;
-	var char_nodes, mod_nodes, text, color;
+	var id, text, color;
 	for(var i = 0; i < size; i++)
 	{
 		text = eString[i].encodedCharacter();
 		color = eString[i].color;
-		sym_nodes = textToSvg(text, color);
-		outSource.appendChild(sym_nodes);
 
+		for(var j = 0; j < text.length; j++)
+		{
+			id = text.charCodeAt(i);
+			$(outSource).appendChild(document.createElement("svg"));
+			$(outSource + " svg:last-child").load(filename + " " + id);
+		
+		}
+/*
 		text = eString[i].modifier;
 		if(text != undefined && text != '')
 		{
 			sym_nodes = textToSvg(text, 0);
 			$(outSource).appendChild(sym_nodes);
 		}
+*/
 	}
 }
 
