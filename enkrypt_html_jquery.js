@@ -309,6 +309,7 @@ var textToSvg = function(text, color)
 
 var outputSvg = function(eString, outSource) {
 	var size = eString.length;
+	var filename = '/images/svg_list.html';
 	var id, text, color;
 	for(var i = 0; i < size; i++)
 	{
@@ -396,4 +397,3 @@ $(document).ready(function()
 // Each ESymbol has width of 1
 // Each modifier has width of 1/2 or 1/4
 // Modifiers must be on the same line as the previous ESymbol
-
