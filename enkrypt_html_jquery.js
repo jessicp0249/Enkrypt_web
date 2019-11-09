@@ -326,7 +326,7 @@ var outputSvg = function(eString, outSource)
 			$(outSource).append("<svg></svg>");
 			$(outSource + " svg:last-child").load(filename + " " + id);
 			$(outSource + " svg:last-child").attr("class", color);
-			*/
+			*/		
 		}
 		/*
 		text = eString[i].modifier;
