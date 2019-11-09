@@ -56,7 +56,7 @@ var isValid = function(input, invalid_chars)
 // raw: string to be formatted
 // returns formatted version of string raw, or
 // empty string if raw is invalid
-function format_string(raw)
+var format_string = function(raw)
 {
 	var dividers = /[\s.!?"]/;	// Characters that separate words
 	var valid_chars = /[a-z0-9.!?'"]/;
@@ -89,7 +89,7 @@ function format_string(raw)
 	return formatted;
 };
 
-function messageFromString(message)
+var messageFromString = function(message)
 {
 	var eString = [];	// Array for eSymbols
 	var current = '';	// Current character in message
@@ -126,7 +126,7 @@ function messageFromString(message)
 // Determine which characters are what color
 // size: number of symbols in message
 // returns an array of indexes for the first character in each section
-function splitIntoSections(size)
+var splitIntoSections = function(size)
 {
 	var num_colors = color_list.length;
 	var remainder = (size % num_colors);
@@ -146,9 +146,9 @@ function splitIntoSections(size)
 	return indexes;
 };
 
+/*
 // Shifts the given letter the given number of steps
 // Adds duplicate symbol if necessary
-/*
 var letterShift = function(letter, steps)
 {
 	var shifted = letter;
@@ -180,7 +180,6 @@ var letterShift = function(letter, steps)
 var  colorFromInt = function(integer)
 {
 	var color = '';
-	// if integer is a valid index, get color from list
 	if( integer >= 0 && integer < color_list.length)
 		color = color_list[integer];
 
@@ -214,8 +213,8 @@ var assign_colors = function(eString)
 	{
 		color_num = i % all_colors;
 		eString[i].color = color_num;
-//		eString[i].character = 
-//			letterShift(eString[i].character, color_num * all_colors);
+		//eString[i].character = 
+		//	letterShift(eString[i].character, color_num * all_colors);
 	}
 };
 
@@ -307,34 +306,42 @@ var textToSvg = function(text, color)
 };
 */
 
-var outputSvg = function(eString, outSource) {
+// FIXME: incomplete and untested
+var outputSvg = function(eString, outSource)
+{
 	var size = eString.length;
+	//var filename = '/images/svg_list.html';
 	var id, text, color;
 	for(var i = 0; i < size; i++)
 	{
 		text = eString[i].encodedCharacter();
-		color = eString[i].color;
+		color = colorFromInt(eString[i].color);
 
 		for(var j = 0; j < text.length; j++)
 		{
-			id = text.charCodeAt(i);
+			id = text.charCodeAt(j);
+			$(id).children().clone().appendTo(outSource);
+			$(outSource + " svg:last-child").attr("class", color);
+			/*
 			$(outSource).append("<svg></svg>");
 			$(outSource + " svg:last-child").load(filename + " " + id);
-		
+			$(outSource + " svg:last-child").attr("class", color);
+			*/
 		}
-/*
+		/*
 		text = eString[i].modifier;
 		if(text != undefined && text != '')
 		{
 			sym_nodes = textToSvg(text, 0);
 			$(outSource).appendChild(sym_nodes);
 		}
-*/
+		*/
 	}
 };
 
 // "EnKrypt!" button
-var encryptInput = function() {
+var encryptInput = function()
+{
 	var raw = $("#user_input").val();
 	var message = format_string(raw);
 
@@ -345,18 +352,64 @@ var encryptInput = function() {
 		$("#output_wrapper").html('');	// Clear previous output
 
 		outputSvg(eString, "#output_wrapper");
-/*
+		/*
 		// Convert each eSymbol to HTML and add to document
 		for(var i = 0; i < eString.length; i++)
 			$("#output_wrapper").append(symbolToHTML(eString[i]));
-*/	
+		*/	
 	}
 
 	$("#user_input").focus();
 };
 
+// include html from external file.
+// Call function from inside the element to contain the included html
+var includeHTML = function(filename, selector)
+{
+	var elmnt = $(selector);	// element(s) to include the html
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function()
+	{
+		if (this.readyState == 4)
+		{
+			if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+			if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+			/* Remove the attribute, and call this function once more: */
+			// elmnt.removeAttribute();
+			// includeHTML();
+		}
+	}
+	xhttp.open("GET", filename, true);
+	xhttp.send();
+	return;
+};
+
+
 $(document).ready(function() 
 {
+		// import html from external file
+//	function()
+//	{
+		var elmnt = $("#svg_list");	// element(s) to include the html
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function()
+		{
+			if (this.readyState == 4)
+			{
+				// if request is successful, output data to element
+				if (this.status == 200)
+					elmnt.innerHTML = this.responseText;
+				if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+				/* Remove the attribute, and call this function once more: */
+				// elmnt.removeAttribute();
+				// includeHTML();
+			}
+		}
+		xhttp.open("GET", "images/svg_list.html", true);
+		xhttp.send();
+//		return;
+//	};
+
 	$("#clear_btn").click(function() {
 		$("#user_input").html("");
 	});	// end clear button click
