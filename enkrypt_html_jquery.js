@@ -281,32 +281,49 @@ var symbolToHTML = function(mySymbol)
 	return output;
 };
 
+
+var symbolToSvg = function(eSymbol, selector)
+{
+	var text, mod_index, color, size, svg_id;
+	text = eSymbol.encodedCharacter();
+	mod_index = text.length;
+	color = colorFromInt(eSymbol.color);
+
+	if(eSymbol.modifier != "" && eSymbol.modifier != undefined)
+		text += eSymbol.modifier;
+
+	size = text.length;
+	for(var i = 0; i < size; i++)
+	{
+		if(i == mod_index)
+			color = colorFromInt(0);
+		svg_id = "#" + text.charCodeAt(i);
+		$(svg_id).clone().appendTo(selector);
+		$(selector + "svg::last-child").addClass(color);
+		$(selector + "svg::last-child").removeAttr("id");
+	}
+
+}
+
 /*
 // FIXME: incomplete function
-var textToSvg = function(text, color)
+// add classnames to parameters
+var textToSvg = function(text, outSource)
 {
-	// Name of directory containing svg files
-	var filename = '/images/svg_list.html';
-	var nodes = [];	// Array of nodes to return
-	var node, id;
-
-	for(var i = 0; i < text.length; i++)
+	for(var j = 0; j < text.length; j++)
 	{
-		id = "#" + text.charCodeAt(i);
-		node = document.createElement("svg");
-		// FIXME: Assign file contents to node
-		node.load(filename + " " + id);
-		// FIXME: Assign class: color to node
-		node.attr("class", color);
-		// FIXME: Add node to array
-		nodes.append(node);
+	var id = "#" + text.charCodeAt(j);
+	$(id).children().clone().appendTo(outSource);
+	// If svg container object has a class, add it to classnames
+	if($(id).attr("class"))
+		classnames = classnames + " " + $(id).attr("class");
+	$(outSource + " svg:last-child").attr("class", classnames);			
 	}
-	
-	return nodes;
-};
-*/
 
-// FIXME: incomplete and untested
+};
+
+// FIXME: incomplete function
+// add portion to output modifiers
 var outputSvg = function(eString, outSource)
 {
 	var size = eString.length;
@@ -315,31 +332,17 @@ var outputSvg = function(eString, outSource)
 	{
 		text = eString[i].encodedCharacter();
 		classnames = colorFromInt(eString[i].color);
+		textToSvg(text, outSource);
 
-		for(var j = 0; j < text.length; j++)
-		{
-			id = "#" + text.charCodeAt(j);
-			$(id).children().clone().appendTo(outSource);
-			// If svg container object has a class, add it to classnames
-			if($(id).attr("class"))
-				classnames = classnames + " " + $(id).attr("class");
-			$(outSource + " svg:last-child").attr("class", classnames);
-			/*
-			$(outSource).append("<svg></svg>");
-			$(outSource + " svg:last-child").load(filename + " " + id);
-			$(outSource + " svg:last-child").attr("class", color);
-			*/
-		}
-		/*
 		text = eString[i].modifier;
-		if(text != undefined && text != '')
+		if(text)
 		{
-			sym_nodes = textToSvg(text, 0);
-			$(outSource).appendChild(sym_nodes);
+			classnames = colorFromInt(0);
+			textToSvg(text, outSource);
 		}
-		*/
 	}
 };
+*/
 
 // "EnKrypt!" button
 var encryptInput = function()
@@ -351,8 +354,10 @@ var encryptInput = function()
 	{
 		// Build and scramble message
 		var eString = scramble(messageFromString(message));
+		var size = eString.length;
 		$("#output_wrapper").html('');	// Clear previous output
-		outputSvg(eString, "#output_wrapper");
+		for(var i = 0; i < size; i++)
+			symbolToSvg(eString[i], "#output_wrapper");
 		/*
 		// Convert each eSymbol to HTML and add to document
 		for(var i = 0; i < eString.length; i++)
