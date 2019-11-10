@@ -146,37 +146,6 @@ var splitIntoSections = function(size)
 	return indexes;
 };
 
-/*
-// Shifts the given letter the given number of steps
-// Adds duplicate symbol if necessary
-var letterShift = function(letter, steps)
-{
-	var shifted = letter;
-	var duplicates = letter.length - 1;
-	var min = 'a'.charCodeAt(0);
-	var max = 'z'.charCodeAt(0);
-
-	if(steps != 0 && letter.match(/[A-z]/))
-	{
-		letter = letter[0]	// Only use first character
-		shifted = (letter.toLowerCase()).charCodeAt(0) + steps;
-
-		if(shifted > max)	// keep within range of lowercase letters
-			shifted = (shifted - max) + (min - 1);
-
-		shifted = String.fromCharCode(shifted);
-
-		if(letter == letter.toUpperCase())	// Capitalize if necessary
-			shifted = shifted.toUpperCase();
-
-		for(var i = 0; i < duplicates; i++)
-			shifted += double_char;
-	}
-
-	return shifted;
-};
-*/
-
 var  colorFromInt = function(integer)
 {
 	var color = '';
@@ -281,7 +250,6 @@ var symbolToHTML = function(mySymbol)
 	return output;
 };
 
-
 var symbolToSvg = function(eSymbol, selector)
 {
 	var text, mod_index, color, size, svg_id;
@@ -304,45 +272,6 @@ var symbolToSvg = function(eSymbol, selector)
 	}
 
 }
-
-/*
-// FIXME: incomplete function
-// add classnames to parameters
-var textToSvg = function(text, outSource)
-{
-	for(var j = 0; j < text.length; j++)
-	{
-	var id = "#" + text.charCodeAt(j);
-	$(id).children().clone().appendTo(outSource);
-	// If svg container object has a class, add it to classnames
-	if($(id).attr("class"))
-		classnames = classnames + " " + $(id).attr("class");
-	$(outSource + " svg:last-child").attr("class", classnames);			
-	}
-
-};
-
-// FIXME: incomplete function
-// add portion to output modifiers
-var outputSvg = function(eString, outSource)
-{
-	var size = eString.length;
-	var id, text, classnames;
-	for(var i = 0; i < size; i++)
-	{
-		text = eString[i].encodedCharacter();
-		classnames = colorFromInt(eString[i].color);
-		textToSvg(text, outSource);
-
-		text = eString[i].modifier;
-		if(text)
-		{
-			classnames = colorFromInt(0);
-			textToSvg(text, outSource);
-		}
-	}
-};
-*/
 
 // "EnKrypt!" button
 var encryptInput = function()
@@ -406,6 +335,4 @@ $(document).ready(function()
 	$("#user_input").focus();
 });	// end ready
 
-// Each ESymbol has width of 1
-// Each modifier has width of 1/2 or 1/4
 // Modifiers must be on the same line as the previous ESymbol
