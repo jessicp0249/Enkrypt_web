@@ -12,12 +12,14 @@ function eSymbol(character, modifier, color)
 	this.character = character,
 	this.modifier = modifier,
 	this.color = color;
+	// Shifts the character based on color
 	this.encodedCharacter = function() {
 		var steps = this.color * color_list.length;
-		var result = this.character[0];
+		var letter = this.character[0];
+		var result = letter;
 		var duplicates = this.character.length - 1;
 
-		if(steps != 0 && this.character[0].match(/[A-z]/))
+		if(steps != 0 && letter.match(/[A-z]/))
 		{
 			result = result.toLowerCase().charCodeAt(0) + steps;
 			// keep within range of lowercase letters
@@ -27,7 +29,7 @@ function eSymbol(character, modifier, color)
 
 			result = String.fromCharCode(result);
 			// Capitalize if necessary
-			if(this.character[0] == this.character[0].toUpperCase())
+			if(letter == letter.toUpperCase())
 				result = result.toUpperCase();
 		}
 		// add double character(s) if necessary
@@ -219,6 +221,7 @@ var scramble = function(eString)
 	return mixed;
 };
 
+/*
 // Get HTML representation of the given eSymbol object
 var symbolToHTML = function(mySymbol)
 {
@@ -232,13 +235,6 @@ var symbolToHTML = function(mySymbol)
 	// Punctuation/modifier portion
 	if(mySymbol.modifier != undefined)
 		punctuation = mySymbol.modifier;
-	/*
-	var size = 0;
-	if(mySymbol.modifier != undefined)
-		size = mySymbol.modifier.length;
-	for(var i = 0; i < size; i++)
-		punctuation += mySymbol.modifier[i];
-	*/
 	if(punctuation != "")
 	{
 		classes = "\"" + colorFromInt(0) + "\">";
@@ -249,6 +245,7 @@ var symbolToHTML = function(mySymbol)
 
 	return output;
 };
+*/
 
 var symbolToSvg = function(eSymbol, selector)
 {
@@ -267,11 +264,10 @@ var symbolToSvg = function(eSymbol, selector)
 			color = colorFromInt(0);
 		svg_id = "#" + text.charCodeAt(i);
 		$(svg_id).clone().appendTo(selector);
-		$(selector + "svg::last-child").addClass(color);
-		$(selector + "svg::last-child").removeAttr("id");
+		$(selector + " svg:last-child").addClass(color);
+		$(selector + " svg:last-child").removeAttr("id");
 	}
-
-}
+};
 
 // "EnKrypt!" button
 var encryptInput = function()
@@ -287,11 +283,6 @@ var encryptInput = function()
 		$("#output_wrapper").html('');	// Clear previous output
 		for(var i = 0; i < size; i++)
 			symbolToSvg(eString[i], "#output_wrapper");
-		/*
-		// Convert each eSymbol to HTML and add to document
-		for(var i = 0; i < eString.length; i++)
-			$("#output_wrapper").append(symbolToHTML(eString[i]));
-		*/	
 	}
 	$("#user_input").focus();
 };
@@ -335,4 +326,6 @@ $(document).ready(function()
 	$("#user_input").focus();
 });	// end ready
 
+// Each ESymbol has width of 1
+// Each modifier has width of 1/2 or 1/4
 // Modifiers must be on the same line as the previous ESymbol
