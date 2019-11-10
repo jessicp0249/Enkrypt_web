@@ -12,12 +12,14 @@ function eSymbol(character, modifier, color)
 	this.character = character,
 	this.modifier = modifier,
 	this.color = color;
+	// Shifts the character based on color
 	this.encodedCharacter = function() {
 		var steps = this.color * color_list.length;
-		var result = this.character[0];
+		var letter = this.character[0];
+		var result = letter;
 		var duplicates = this.character.length - 1;
 
-		if(steps != 0 && this.character[0].match(/[A-z]/))
+		if(steps != 0 && letter.match(/[A-z]/))
 		{
 			result = result.toLowerCase().charCodeAt(0) + steps;
 			// keep within range of lowercase letters
@@ -27,7 +29,7 @@ function eSymbol(character, modifier, color)
 
 			result = String.fromCharCode(result);
 			// Capitalize if necessary
-			if(this.character[0] == this.character[0].toUpperCase())
+			if(letter == letter.toUpperCase())
 				result = result.toUpperCase();
 		}
 		// add double character(s) if necessary
@@ -146,37 +148,6 @@ var splitIntoSections = function(size)
 	return indexes;
 };
 
-/*
-// Shifts the given letter the given number of steps
-// Adds duplicate symbol if necessary
-var letterShift = function(letter, steps)
-{
-	var shifted = letter;
-	var duplicates = letter.length - 1;
-	var min = 'a'.charCodeAt(0);
-	var max = 'z'.charCodeAt(0);
-
-	if(steps != 0 && letter.match(/[A-z]/))
-	{
-		letter = letter[0]	// Only use first character
-		shifted = (letter.toLowerCase()).charCodeAt(0) + steps;
-
-		if(shifted > max)	// keep within range of lowercase letters
-			shifted = (shifted - max) + (min - 1);
-
-		shifted = String.fromCharCode(shifted);
-
-		if(letter == letter.toUpperCase())	// Capitalize if necessary
-			shifted = shifted.toUpperCase();
-
-		for(var i = 0; i < duplicates; i++)
-			shifted += double_char;
-	}
-
-	return shifted;
-};
-*/
-
 var  colorFromInt = function(integer)
 {
 	var color = '';
@@ -250,6 +221,7 @@ var scramble = function(eString)
 	return mixed;
 };
 
+/*
 // Get HTML representation of the given eSymbol object
 var symbolToHTML = function(mySymbol)
 {
@@ -263,13 +235,6 @@ var symbolToHTML = function(mySymbol)
 	// Punctuation/modifier portion
 	if(mySymbol.modifier != undefined)
 		punctuation = mySymbol.modifier;
-	/*
-	var size = 0;
-	if(mySymbol.modifier != undefined)
-		size = mySymbol.modifier.length;
-	for(var i = 0; i < size; i++)
-		punctuation += mySymbol.modifier[i];
-	*/
 	if(punctuation != "")
 	{
 		classes = "\"" + colorFromInt(0) + "\">";
@@ -280,7 +245,7 @@ var symbolToHTML = function(mySymbol)
 
 	return output;
 };
-
+*/
 
 var symbolToSvg = function(eSymbol, selector)
 {
@@ -299,50 +264,10 @@ var symbolToSvg = function(eSymbol, selector)
 			color = colorFromInt(0);
 		svg_id = "#" + text.charCodeAt(i);
 		$(svg_id).clone().appendTo(selector);
-		$(selector + "svg::last-child").addClass(color);
-		$(selector + "svg::last-child").removeAttr("id");
-	}
-
-}
-
-/*
-// FIXME: incomplete function
-// add classnames to parameters
-var textToSvg = function(text, outSource)
-{
-	for(var j = 0; j < text.length; j++)
-	{
-	var id = "#" + text.charCodeAt(j);
-	$(id).children().clone().appendTo(outSource);
-	// If svg container object has a class, add it to classnames
-	if($(id).attr("class"))
-		classnames = classnames + " " + $(id).attr("class");
-	$(outSource + " svg:last-child").attr("class", classnames);			
-	}
-
-};
-
-// FIXME: incomplete function
-// add portion to output modifiers
-var outputSvg = function(eString, outSource)
-{
-	var size = eString.length;
-	var id, text, classnames;
-	for(var i = 0; i < size; i++)
-	{
-		text = eString[i].encodedCharacter();
-		classnames = colorFromInt(eString[i].color);
-		textToSvg(text, outSource);
-
-		text = eString[i].modifier;
-		if(text)
-		{
-			classnames = colorFromInt(0);
-			textToSvg(text, outSource);
-		}
+		$(selector + " svg:last-child").addClass(color);
+		$(selector + " svg:last-child").removeAttr("id");
 	}
 };
-*/
 
 // "EnKrypt!" button
 var encryptInput = function()
@@ -358,11 +283,6 @@ var encryptInput = function()
 		$("#output_wrapper").html('');	// Clear previous output
 		for(var i = 0; i < size; i++)
 			symbolToSvg(eString[i], "#output_wrapper");
-		/*
-		// Convert each eSymbol to HTML and add to document
-		for(var i = 0; i < eString.length; i++)
-			$("#output_wrapper").append(symbolToHTML(eString[i]));
-		*/	
 	}
 	$("#user_input").focus();
 };
