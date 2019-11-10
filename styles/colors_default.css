@@ -2,19 +2,20 @@
 
 .Y {
     color: #ff6;
-   /* fill: #ff6; */
+    fill: #ff6;
 }
 
 .R {
     color: #c33;
-    /* fill: #c33; */
+    fill: #c33;
 }
 
 .B {
     color: #3cc;
-    /* fill: #3cc; */
+    fill: #3cc;
 }
 
 .bg {
+	color: #fff;
     background-color: #000;
 }

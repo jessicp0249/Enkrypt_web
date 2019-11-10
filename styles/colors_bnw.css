@@ -2,21 +2,28 @@
 .Y {
     color: #fff;
     fill: #fff;
-    border: 1px solid #000;
+    stroke: #000;
+    stroke-width: 2;
+/*    border: 1px solid #000;   */
 }
 
 .R {
     color: #000;
     fill: #000;
-    border: 1px solid #000;
+    stroke: #000;
+    stroke-width: 2;
+/*    border: 1px solid #000;   */
 }
 
 .B {
     color: #666;
     fill: #666;
-    border: 1px solid #000;
+    stroke: #000;
+    stroke-width: 2;
+/*    border: 1px solid #000;   */
 }
 
 .bg {
+    color: #000;
     background-color: #ccc;
 }

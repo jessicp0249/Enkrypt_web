@@ -2,7 +2,7 @@
 
 // Global variables
 var color_list = ['Y', 'B', 'R'];
-var size_list = [36, 72, 108, 144];	// Default size is 72
+var size_list = [36, 56, 72, 108];	// Default size is 72
 var double_char = ':';
 var size_mode = size_list[1];	// Set to default
 
@@ -310,23 +310,25 @@ var textToSvg = function(text, color)
 var outputSvg = function(eString, outSource)
 {
 	var size = eString.length;
-	//var filename = '/images/svg_list.html';
-	var id, text, color;
+	var id, text, classnames;
 	for(var i = 0; i < size; i++)
 	{
 		text = eString[i].encodedCharacter();
-		color = colorFromInt(eString[i].color);
+		classnames = colorFromInt(eString[i].color);
 
 		for(var j = 0; j < text.length; j++)
 		{
-			id = text.charCodeAt(j);
+			id = "#" + text.charCodeAt(j);
 			$(id).children().clone().appendTo(outSource);
-			$(outSource + " svg:last-child").attr("class", color);
+			// If svg container object has a class, add it to classnames
+			if($(id).attr("class"))
+				classnames = classnames + " " + $(id).attr("class");
+			$(outSource + " svg:last-child").attr("class", classnames);
 			/*
 			$(outSource).append("<svg></svg>");
 			$(outSource + " svg:last-child").load(filename + " " + id);
 			$(outSource + " svg:last-child").attr("class", color);
-			*/		
+			*/
 		}
 		/*
 		text = eString[i].modifier;
@@ -350,7 +352,6 @@ var encryptInput = function()
 		// Build and scramble message
 		var eString = scramble(messageFromString(message));
 		$("#output_wrapper").html('');	// Clear previous output
-
 		outputSvg(eString, "#output_wrapper");
 		/*
 		// Convert each eSymbol to HTML and add to document
@@ -358,58 +359,11 @@ var encryptInput = function()
 			$("#output_wrapper").append(symbolToHTML(eString[i]));
 		*/	
 	}
-
 	$("#user_input").focus();
 };
 
-// include html from external file.
-// Call function from inside the element to contain the included html
-var includeHTML = function(filename, selector)
-{
-	var elmnt = $(selector);	// element(s) to include the html
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function()
-	{
-		if (this.readyState == 4)
-		{
-			if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-			if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-			/* Remove the attribute, and call this function once more: */
-			// elmnt.removeAttribute();
-			// includeHTML();
-		}
-	}
-	xhttp.open("GET", filename, true);
-	xhttp.send();
-	return;
-};
-
-
 $(document).ready(function() 
 {
-		// import html from external file
-//	function()
-//	{
-		var elmnt = $("#svg_list");	// element(s) to include the html
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function()
-		{
-			if (this.readyState == 4)
-			{
-				// if request is successful, output data to element
-				if (this.status == 200)
-					elmnt.innerHTML = this.responseText;
-				if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-				/* Remove the attribute, and call this function once more: */
-				// elmnt.removeAttribute();
-				// includeHTML();
-			}
-		}
-		xhttp.open("GET", "images/svg_list.html", true);
-		xhttp.send();
-//		return;
-//	};
-
 	$("#clear_btn").click(function() {
 		$("#user_input").html("");
 	});	// end clear button click
@@ -439,6 +393,8 @@ $(document).ready(function()
 
 		size_mode = width;
 		$("#size_styles").html("svg { width: " + width + "px; }");
+		$("#size_styles").append("svg.half { width: " + width/2 + "px; }");
+		$("#size_styles").append("svg.quarter { width: " + width/4 + "px; }");
 		$("#size_mode").html(": " + $("#" + id).html());
 	});	// end click for size options
 
