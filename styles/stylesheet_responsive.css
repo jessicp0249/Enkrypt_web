@@ -12,8 +12,8 @@ body {
 }
 
 header, footer {
-	/*    height: 4rem;	*/
-    padding: 2% 0% 2% 4%;
+	min-height: 4rem;
+    padding: 1.5em 1em;
     color: white;
     background-color: black;
 }
@@ -111,7 +111,7 @@ button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
 }
 #display_options nav {
 	/* keeps flexbox from expanding with dropdown menu*/
-	height: 50px;
+	height: 75px;
 	display: flex;
 }
 
@@ -132,14 +132,11 @@ nav ul h5 {
     vertical-align: middle;
 	font-size: 14px;
     margin: 0.5em 0;
-    float: left;
 }
 
 h5.display_mode {
 	font-weight: normal;
-    float: right;
 }
-li {clear: both;}
 
 li a {
     display: block;
@@ -179,35 +176,27 @@ nav ul li:focus, nav ul li:hover {
 
 }
 /* desktop */
-/*
+
 @media only screen and (min-width:769)
 {
-	main {
-	    width: 96%;
-	    margin: 2% 2% 5%;
-	    padding: 0%;
-	}
+    /* Display option menu */
+    #display_options nav {
+        /* keeps flexbox from expanding with dropdown menu*/
+        height: 50px;
+        display: flex;
+    }
+    nav ul h5 {
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+        margin: 0.5em 0;
+        float: left;
+    }
 
-	aside {border-radius: 10px;}
-	h3 {width: 50%;}
-
-	#howto ul {
-		float: left;
-	}
-
-	button {width: 49%;}
-	#input_button_wrapper {flex-direction: row;}
-
-	#output_wrapper {
-	    width: 96%;
-	    margin: 1% 0%;
-	    border-radius: 10px; 
-	}
-	/* Display option menu */
-/*
-	#display_options {
-	    height: 3rem;
-	    flex-direction: row;
-	}
+    h5.display_mode {
+        font-weight: normal;
+        float: right;
+    }
+    li {clear: both;}
 
 }

@@ -300,8 +300,11 @@ $(document).ready(function()
 		$("#color_styles").attr("href", "styles/" + id + ".css");
 		// Change option displayed in "selected_options" span for color mode
 		$("#color_mode").html($(this).children("img").attr("alt"));
+		// FIXME: close dropdown menu after click
 	});	// end click for color options
 	
+	$(".size_options").focus(function() {trigger("click");});
+	$(".size_options").mouseover(function() {trigger("click");});
 	$(".size_options").click(function() {
 		var id = $(this).attr("id");
 		var width;
@@ -320,11 +323,11 @@ $(document).ready(function()
 		$("#size_styles").append("svg.half { width: " + width/2 + "px; }");
 		$("#size_styles").append("svg.quarter { width: " + width/4 + "px; }");
 		$("#size_mode").html($("#" + id).html());
+		// FIXME: close dropdown menu after click
 	});	// end click for size options
 
 	$("#user_input").focus();
 });	// end ready
 
-// Each ESymbol has width of 1
-// Each modifier has width of 1/2 or 1/4
-// Modifiers must be on the same line as the previous ESymbol
+
+// FIXME: Modifiers must be on the same line as the previous ESymbol
