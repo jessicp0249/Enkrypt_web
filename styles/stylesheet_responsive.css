@@ -111,7 +111,7 @@ button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
 }
 #display_options nav {
 	/* keeps flexbox from expanding with dropdown menu*/
-	height: 75px;
+	height: 70px;
 	display: flex;
 }
 
@@ -131,7 +131,7 @@ nav ul h5 {
 	text-align: center;
     vertical-align: middle;
 	font-size: 14px;
-    margin: 0.5em 0;
+    margin: 0.25em 0;
 }
 
 h5.display_mode {
@@ -140,25 +140,25 @@ h5.display_mode {
 
 li a {
     display: block;
-    padding: 0.5em;
     vertical-align: middle;
+    padding: 0.5em;
     text-decoration: none;
     color: black;
 }
-li a img {
-    max-height: 50px;
-
-}
-
+a.color_options {padding: 1px 0;}
+li a img {max-height: 50px;}
 nav > ul > li {display: none;}
+
 nav ul:hover li, nav ul:focus li {
     display: block;
-/*    min-height: 40px; */
     background-color: #ccc;
 }
 nav ul li:focus, nav ul li:hover {
     font-weight: bold;
     background-color: white;
+}
+nav ul li:focus a img, nav ul li:hover a img {
+    opacity: 0.75;
 }
 
 

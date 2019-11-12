@@ -303,8 +303,6 @@ $(document).ready(function()
 		// FIXME: close dropdown menu after click
 	});	// end click for color options
 	
-	$(".size_options").focus(function() {trigger("click");});
-	$(".size_options").mouseover(function() {trigger("click");});
 	$(".size_options").click(function() {
 		var id = $(this).attr("id");
 		var width;
