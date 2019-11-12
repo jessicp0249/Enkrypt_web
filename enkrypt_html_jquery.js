@@ -299,8 +299,7 @@ $(document).ready(function()
 		var id = $(this).attr("id");
 		$("#color_styles").attr("href", "styles/" + id + ".css");
 		// Change option displayed in "selected_options" span for color mode
-		var name = $(this).children("img").attr("alt");
-		$("#color_mode").html(": " + name);
+		$("#color_mode").html($(this).children("img").attr("alt"));
 	});	// end click for color options
 	
 	$(".size_options").click(function() {
@@ -320,7 +319,7 @@ $(document).ready(function()
 		$("#size_styles").html("svg { width: " + width + "px; }");
 		$("#size_styles").append("svg.half { width: " + width/2 + "px; }");
 		$("#size_styles").append("svg.quarter { width: " + width/4 + "px; }");
-		$("#size_mode").html(": " + $("#" + id).html());
+		$("#size_mode").html($("#" + id).html());
 	});	// end click for size options
 
 	$("#user_input").focus();

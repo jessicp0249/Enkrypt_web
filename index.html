@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="enkrypt_html_jquery.js"></script>
-    <link rel="stylesheet" href="styles/stylesheet.css">
+    <link rel="stylesheet" href="styles/stylesheet_responsive.css">
     <link id="color_styles" rel="stylesheet" type="text/css" href="styles/colors_default.css">
     <style id="size_styles" type="text/css">
         svg { width: 56px; }
@@ -19,8 +19,27 @@
     </header>
     <aside>
         <article id="howto">
+            <ul>
+                <h2>How to use</h2>
+                <li>Type a message into the text box below.</li>
+                <li>Click the <strong>"EnKrypt!" button</strong> to encode it.</li>
+                <li>Click the <strong>"Clear" button</strong> to clear the text box.</li>
+                <li><strong>Refresh</strong> the page to clear the coded output.</li>
+                <li>Use the <strong>Display Options</strong> to change the size and colors of the coded output.</li>
+                <li>
+                    <ul>
+                        <strong>For best results</strong>, use only the following:
+                        <li>Letters <strong>A-Z</strong> (lowercase or uppercase)</li>
+                        <li>Numbers <strong>0-9</strong></li>
+                        <li>Periods, exclamation points, question marks (<strong>. ! ?</strong>)</li>
+                        <li>Single and double quotes (<strong>' "</strong>)</li>
+                    </ul>
+                </li>
+            </ul>
+        <!--
             <h2>How to use</h2>
-            <p>Type a message into the text box below and click the <strong>"EnKrypt!" button</strong> to encode it.<br>Click the <strong>"Clear" button</strong> to clear the text box.<br><strong>Refresh</strong> the page to clear the coded output.<br>Use the Display options to change the size and colors of the coded output.</p>
+            <p>Type a message into the text box below.<br>Click the <strong>"EnKrypt!" button</strong> to encode it.<br>Click the <strong>"Clear" button</strong> to clear the text box.<br><strong>Refresh</strong> the page to clear the coded output.<br>Use the <strong>Display options</strong> to change the size and colors of the coded output.</p>
+
             <ul>
                 For best results, use only the following:
                 <li>Letters <strong>A-Z</strong> (lowercase or uppercase)</li>
@@ -28,42 +47,49 @@
                 <li>Periods, exclamation points, question marks (<strong>. ! ?</strong>)</li>
                 <li>Single and double quotes (<strong>' "</strong>)</li>
             </ul>
+        -->
         </article>
     </aside>
     <main>
         <aside>
             <div id="display_options">
                 <h3>Display Options</h3>
-                <ul>
-                    <h5>SIZE<span class="selected" id="size_mode">: Default</span></h5>
-                    <li>
-                        <a class="size_options" id="smaller" href="#">Smaller</a>
-                    </li>
-                    <li>
-                        <a class="size_options" id="default_size" href="#">Default</a>
-                    </li>
-                    <li>
-                        <a class="size_options" id="bigger" href="#">Bigger</a>
-                    </li>
-                    <li>
-                        <a class="size_options" id="biggest" href="#">Biggest</a>
-                    </li>
-                </ul>
-                <ul>
-                    <h5>COLOR<span class="selected" id="color_mode">: Default</span></h5>
-                    <li>
-                        <a class="color_options" id="colors_default" href="#"><img src="images/display_default.svg" alt="Default colors"></a>
-                    </li>
-                    <li>
-                        <a class="color_options" id="colors_contrast" href="#"><img src="images/display_contrast.svg" alt="High contrast"></a>
-                    </li>
-                    <li>
-                        <a class="color_options" id="colors_soft" href="#"><img src="images/display_soft_light.svg" alt="Soft colors"></a>
-                    </li>
-                    <li>
-                        <a class="color_options" id="colors_bnw" href="#"><img src="images/display_bnw.svg" alt="Black and white"></a>
-                    </li>
-                </ul>
+                <nav>
+                    <ul>
+                        <h5>SIZE</h5>
+                        <h5 class="display_mode" id="size_mode">Default</h5>
+                        <li>
+                            <a class="size_options" id="smaller" href="#">Smaller</a>
+                        </li>
+                        <li>
+                            <a class="size_options" id="default_size" href="#">Default</a>
+                        </li>
+                        <li>
+                            <a class="size_options" id="bigger" href="#">Bigger</a>
+                        </li>
+                        <li>
+                            <a class="size_options" id="biggest" href="#">Biggest</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <h5>COLOR</h5>
+                        <h5 class="display_mode" id="color_mode">Default</h5>
+
+                        <li>
+                            <a class="color_options" id="colors_default" href="#"><img src="images/display_default.svg" alt="Default colors"></a>
+                        </li>
+                        <li>
+                            <a class="color_options" id="colors_contrast" href="#"><img src="images/display_contrast.svg" alt="High contrast"></a>
+                        </li>
+                        <li>
+                            <a class="color_options" id="colors_soft" href="#"><img src="images/display_soft_light.svg" alt="Soft colors"></a>
+                        </li>
+                        <li>
+                            <a class="color_options" id="colors_bnw" href="#"><img src="images/display_bnw.svg" alt="Black and white"></a>
+                        </li>
+                    </ul>
+                </nav>
+
             </div>
             <div id="output_wrapper" class="bg">
                 <p>Encrypted message will appear here.</p>

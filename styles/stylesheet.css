@@ -47,13 +47,7 @@ h3 {
     font-weight: normal;
 }
 
-p {
-    padding: 0.5em;
-}
-
-#howto ul li {
-    margin-left: 1em;
-}
+p {padding: 0.5em;}
 
 button {
     width: 49%;
@@ -66,9 +60,10 @@ button {
     display: block;
 }
 
-button:hover, button:focus, a:hover, a:focus {
-    font-weight: bold;
-}
+button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
+
+#howto ul {margin-left: 1em;}
+#howto ul li {margin-left: 2em;}
 
 #howto {
     width: 96%;
@@ -112,6 +107,7 @@ textarea {
   display: table;
 }
 
+svg {float: left;}
 
 /* Display option menu */
 li {
@@ -132,10 +128,6 @@ li a img {
     margin: 2%;
 }
 
-svg {
-    float: left;
-}
-
 #display_options {
     width: 100%;
     height: 3rem;
@@ -151,7 +143,7 @@ svg {
     justify-content: flex-end;
 }
 
-#display_options ul {
+#display_options nav ul {
     position: relative;
     width: 20%;
     margin: 0.5% 0.5%;
@@ -163,36 +155,29 @@ svg {
 }
 
 /* FIXME: center text in display_option buttons with media queries */
-#display_options ul h5 {
-    text-align: center;
-}
+#display_options nav ul h5 {text-align: center;}
 
-.selected {
-    font-weight: normal;
-}
+/* .selected { font-weight: normal; }	*/
 
-#display_options > ul > li {
-    display: none;
-}
+#display_options > nav > ul > li {display: none;}
 
-#display_options ul:hover li, #display_options ul:focus li {
+#display_options nav ul:hover li, #display_options nav ul:focus li {
     display: block;
     background-color: #ccc;
 }
 
-#display_options ul li:focus, #display_options ul li:hover {
+#display_options nav ul li:focus, #display_options nav ul li:hover {
     font-weight: bold;
     background-color: white;
 }
 
 /* Footer styles */
-
 footer {
     margin-top: auto;
     bottom: 0;
 }
 
-    /* Color settings */
+/* Color settings */
 span {
     margin: 0;
     padding: 0.25em;
