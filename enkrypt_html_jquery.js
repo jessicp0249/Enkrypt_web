@@ -324,7 +324,6 @@ $(document).ready(function()
 		// FIXME: close dropdown menu after click
 	});	// end click for size options
 
-	$("#user_input").focus();
 });	// end ready
 
 
