@@ -293,6 +293,13 @@ $(document).ready(function()
 		$("#user_input").html("");
 	});	// end clear button click
 
+	$(".expanded, .collapsed").click(function() {
+		$(this).toggleClass("expanded");
+		$(this).toggleClass("collapsed");
+
+		$(this).siblings().toggle();
+	});
+
 	$("#enkrypt_btn").click(encryptInput);
 
 	$(".color_options").click(function() {

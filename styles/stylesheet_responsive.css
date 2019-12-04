@@ -9,28 +9,78 @@
 body {
     width: 100%;	
     background-color: #ccc;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 header, footer {
 	min-height: 4rem;
-    padding: 1.5em 1em;
+    padding: 0em 1em;
     color: white;
     background-color: black;
+
+    flex-basis: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expanded:before {
+    content: url(../images/icon_expanded.svg);
+    width: 2em;
+    float: left;
+}
+
+.collapsed:before {
+    content: url(../images/icon_collapsed.svg);
+    width: 2em;
+    float: left;
+}
+
+li, p { clear: left; }
+
+#logo svg {
+    width: 50%;
+    fill: #ccc;
+
+    flex-grow: 1;
 }
 
 footer {
     /*    margin-top: auto; */
     bottom: 0;
+    padding: 1.5em 1em;
+
+    flex-basis: auto;
 }
 
 main {
     clear: both;
     position: relative;
+
+    flex-basis: auto;
 }
 
 aside {
     margin: 0;
     padding: 2%;
+
+    flex-basis: auto;
+}
+
+h1 {
+    color: #ccc;
+    font-weight: normal;
+    font-size: 1.5rem;
+    font-variant: small-caps;
+    text-align: right;
+
+    flex-grow: 2;
 }
 
 h3 {
@@ -45,12 +95,9 @@ p {padding: 0.5em;}
 
 svg {float: left;}
 
-#howto {
-    padding: 2% 2% 0%;
-}
+#howto { padding: 2% 2% 0%; }
 #howto ul {padding: 0.5em;}
 #howto ul li {margin-left: 1em;}
-
 
 textarea {
     position: relative;
@@ -60,10 +107,8 @@ textarea {
     z-index: 3;
 }
 
-#input_wrapper {
+#input_wrapper { padding: 2%; }
 
-    padding: 2%;
-}
 #input_button_wrapper {
     position: relative;
     padding: 2px;
@@ -94,7 +139,7 @@ button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
     border: 2px solid white;
     z-index: 2;
 }
-/* make wrapper expand so svgs don't overflow */
+/* makes wrapper expand so svgs don't overflow */
 #output_wrapper::after {
 	content: "";
 	clear: both;
