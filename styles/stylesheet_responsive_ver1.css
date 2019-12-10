@@ -9,131 +9,117 @@
 body {
     width: 100%;	
     background-color: #ccc;
-    font-size: 1em;
 
     display: flex;
-    height: 100vh;
     flex-direction: column;
     justify-content: space-between;
 }
 
 header, footer {
-    width: auto;
+	min-height: 5rem;
+    padding: 0em 1em;
     color: white;
     background-color: black;
+
+    flex-basis: auto;
 }
 
 header {
-    height: 7rem;
-    width: auto;
-    margin-bottom: 1em;
-}
-
-#header_logo {
     height: 5rem;
-    background-image: url(../images/logo.svg);
-    background-size: contain;
-    background-position: 1em top;
-    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#header_tagline {
-    background-color: white;
-    padding: 0.5em;
+header object {
+    flex: 0 1 auto;
 }
 
-footer {
-    bottom: 0;
-    padding: 1.5em 1em;
-    flex-basis: 5rem;
-}
 
 .expanded, .collapsed {
-    /* line-height must be at least as
-    much as :before width */
-    line-height: 2em;
+    padding: 0.5em 0;
+    line-height: 2em; /* must be the same as :before width; */
 }
 
 .expanded:before {
     content: url(../images/icon_expanded.svg);
-    width: 0.5em;
+    width: 2em;
     padding-right: 0.5em;
     float: left;
 }
 
 .collapsed:before {
     content: url(../images/icon_collapsed.svg);
-    width: 0.5em;
+    width: 2em;
     padding-right: 0.5em;
     float: left;
 }
 
 li, p { clear: both; }
 
+#logo svg {
+    width: 50%;
+    fill: #ccc;
+
+    flex-grow: 1;
+}
+
+footer {
+    /*    margin-top: auto; */
+    bottom: 0;
+    padding: 1.5em 1em;
+
+    flex-basis: auto;
+}
+
 main {
-    margin-bottom: 1em;
     clear: both;
     position: relative;
-    flex: 2 0 auto;
+
+    flex: 5 0 auto;
 }
 
 aside {
-    padding: 0 1%;
+    margin: 0;
+    padding: 0 1em;
+
     flex-basis: auto;
-    display: flex;
-    flex-direction: column;
 }
 
 h1 {
-    color: #666;
+    color: #ccc;
     font-weight: normal;
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-variant: small-caps;
-    text-align: center;
+    text-align: right;
 }
-
-h2 { font-size: 1.2em; }
 
 h3 {
 	padding: 1.5%;
     text-align: center;
-    font-size: 1.2em;
+	/*    vertical-align: middle;	*/
     font-weight: normal;
     color: #666;
 }
 
-h4 { font-size: 0.9em; }
-
-h5 {
-
-    text-align: center;
-    font-weight: normal;
-}
-
-p {
-    padding: 0.5em;
-    font-size: 0.9em;
-}
+p {padding: 0.5em;}
 
 svg {float: left;}
 
-#howto { padding: 0.25em 0.25em 0; }
-#howto ul {padding: 0 0.5em 0.5em;}
-#howto ul li {
-    margin-left: 1em;
-    font-size: 0.9em;
-}
+#howto { padding: 2% 2% 0; }
+#howto ul {padding: 0.5em;}
+#howto ul li {margin-left: 1em;}
 
 textarea {
     position: relative;
     width: 100%;
-    font-size: 0.9em;
     padding: 1em 2%;
     border: 2px solid #666;
     z-index: 3;
 }
 
-#input_wrapper, #output_wrapper, #display_options { padding: 0.25em; }
+#input_wrapper { padding: 2%; }
 
 #input_button_wrapper {
     position: relative;
@@ -149,7 +135,7 @@ button {
     padding: 0.5em;
     border: none;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 14px;
     flex: 1;
     color: black;
     background-color: white;
@@ -160,10 +146,10 @@ button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
 
 #output_wrapper {
     position: relative;
-    height: 5rem;
+    min-height: 5rem;
+    padding: 2%;
     border: 2px solid white;
     z-index: 2;
-    flex: 1 0 auto;
 }
 /* makes wrapper expand so svgs don't overflow */
 #output_wrapper::after {
@@ -182,14 +168,14 @@ button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
 }
 #display_options nav {
 	/* keeps flexbox from expanding with dropdown menu*/
-	height: 4em;
+	height: 70px;
 	display: flex;
 }
 
 #display_options nav ul {
-    margin: 2px;
+    margin: 4px;
     padding: 0.5em 1em 0;
-    font-size: 0.9em;
+    font-size: 14px;
     flex: 1;
     color: white;
     background-color: #666;
@@ -198,12 +184,14 @@ button:hover, button:focus, a:hover, a:focus {font-weight: bold;}
 }
 
 /* FIXME: center text in display_option buttons with media queries */
-nav ul h4 {
+nav ul h5 {
 	text-align: center;
     vertical-align: middle;
-	font-size: 0.9em;
+	font-size: 14px;
     margin: 0.25em 0;
 }
+
+h5.display_mode { font-weight: normal; }
 
 li a {
     display: block;
@@ -213,7 +201,7 @@ li a {
     color: black;
 }
 a.color_options {padding: 1px 0;}
-li a img {max-height: 3em;}
+li a img {max-height: 50px;}
 nav > ul > li {display: none;}
 
 nav ul:hover li, nav ul:focus li {
@@ -229,20 +217,45 @@ nav ul li:focus a img, nav ul li:hover a img { opacity: 0.75; }
 
 /* MEDIA QUERIES */
 /* mobile portrait */
-@media only screen and (min-width:600)
+@media only screen and (max-width:600)
 {
-    
+
 }
 
 /* mobile landscape */
 @media only screen and (max-width: 768)
 {
-    
+    h1 { font-size: 1rem; }
+
+    h3 { font-size: 0.75em; }
+
+    li { font-size: 0.75em; }
+    p { font-size: 0.75em; }
+    #display_options nav ul { font-size: 12px; }
+    #display_options nav ul li { font-size: 12px; }
 }
 /* desktop */
 
 @media only screen and (min-width:769)
 {
-    
+    /* Display option menu */
+    #display_options nav {
+        /* keeps flexbox from expanding with dropdown menu*/
+        height: 50px;
+        display: flex;
+    }
+    nav ul h5 {
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+        margin: 0.5em 0;
+        float: left;
+    }
+
+    h5.display_mode {
+        font-weight: normal;
+        float: right;
+    }
+    li {clear: both;}
 
 }
