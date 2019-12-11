@@ -85,7 +85,7 @@ var format_string = function(raw)
 	{
 		// If raw is invalid, print message to output div
 		$("#output_wrapper").append("<p>For best results, \
-		use the characters listed in the 'How to use' section.</p>");
+		use the characters listed in the 'Valid Characters' section.</p>");
 	}
 
 	return formatted;
