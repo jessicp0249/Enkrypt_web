@@ -4,16 +4,17 @@
 1. Major element styles
     - Universal, body, main, aside, article
 2. Header/footer styles
-3. Text styles
-    - headings, p, li
-4. "How to use" and "Valid characters" section styles
+
+3. "How to use" and "Valid characters" section styles
     4a. Expanding/collapsing sections
-5. Input/output section styles
-6. Buttons and clickable menu options
-    6a. Display Options menu container
-    6b. Buttons and drop-down menu headers
-    6c. Drop-down menu headers
-7. Element stack order (z-index)
+4. Input/output section styles
+5. Buttons and clickable menu options
+    5a. Display Options menu container
+    5b. Buttons and drop-down menu headers
+    5c. Drop-down menu headers
+6. Element stack order (z-index)
+7. Text styles
+    - headings, p, li
 8. Media queries
 ====================
 */
@@ -33,12 +34,12 @@
 }
 
 body {
-    width: 100%;	
+    width: 100%;
+    height: 100vh;
     background-color: #ccc;
     font-size: 1em;
-
+    /* flexbox styles */
     display: flex;
-    height: 100vh;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -46,6 +47,7 @@ body {
 main {
     clear: both;
     flex: 2 0 auto;
+    margin: 1em 0.5em;
 }
 
 aside {
@@ -54,7 +56,7 @@ aside {
     flex-direction: column;
 }
 
-article { margin-bottom: 0.5em; }
+article { margin: 1em 0.5em 0; }
 
 
 /*
@@ -78,7 +80,7 @@ header {
     height: 6rem;
     background-image: url(../images/logo.svg);
     background-size: contain;
-    background-position: 1em top;
+    background-position: 2em top;
     background-repeat: no-repeat;
 }
 
@@ -90,69 +92,29 @@ header {
 
 footer {
     bottom: 0;
-    margin-top: 1em;
-    padding: 1.5em 1em;
+    padding: 1.5em;
     flex-basis: 5rem;
 }
 
-footer h3 {
-    padding: 0;
-    color: white;
-}
-
 
 /*
 ====================
-3. Text styles
-    Headings, p, li
+3. "How to use" and "Valid characters" section
 ====================
 */
+#howto { margin: 1em 2em 0.5em; }
 
-h1, h2, h3 {
-    font-weight: normal;
-    font-variant: small-caps;
-    color: #666;
-}
+#howto ul { padding: 0.5em; }
 
-h1 { font-size: 1.5em; }
-
-h2 { font-size: 1.2em; }
-
-h3 { padding: 1.5%; }
-
-h4 { font-size: 1em; }
-
-h5 { font-weight: normal; }
-
-p {
-    padding: 0.5em;
-    font-size: 0.9em;
-}
-
-li, p { clear: both; }
-
+#howto ul li { margin-left: 2em; }
 
 /*
-====================
-4. "How to use" and "Valid characters" section
-====================
+    3a. Expanding/collapsing section styles
 */
-#howto { padding: 0.25em 0.25em 0; }
-#howto ul {padding: 0 0.5em 0.5em;}
-#howto ul li {
-    margin-left: 1em;
-    font-size: 0.9em;
-}
-
-/*
-    4a. Expanding/collapsing section styles
-*/
+/* line-height must be at least as much as :before width */
 .expanded,
-.collapsed {
-    line-height: 2em;
-    /* line-height must be at least
-    as much as :before width */
-}
+.collapsed
+{ line-height: 2em; }
 
 /* icons */
 .expanded:before { content: url(../images/icon_expanded.svg); }
@@ -169,14 +131,13 @@ li, p { clear: both; }
 
 /*
 ====================
-5. Input/output section styles
+4. Input/output section styles
 ====================
 */
 /*
 Output styles
 */
 #output_wrapper {
-    margin: 0.5em 0em;
     padding: 0.5em;
     border: 2px solid white;
     flex: 1 0 5rem;
@@ -193,6 +154,7 @@ Output styles
 /*
 Input styles
 */
+#input_wrapper {margin: 1.5em 0;}
 textarea {
     width: 100%;
     font-size: 0.9em;
@@ -203,12 +165,12 @@ textarea {
 
 /*
 ====================
-6. Buttons and clickable menu options
+5. Buttons and clickable menu options
 ====================
 */
 /* Display Options menu container */
 #display_options {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.25em;
     padding: 0.25em;
 }
 
@@ -258,17 +220,19 @@ Drop-down menu headers
     background-color: #ccc;
 }
 
-/* Show drop-down options on hover */
-li a,
-.display_mode:hover li,
-.display_mode:focus li
-{ display: block; }
+#size_mode, #color_mode {padding: 0;}
 
 a.size_options {
     padding: 0.5em;
     text-decoration: none;
     color: black;
 }
+
+/* Show drop-down options on hover */
+li a,
+.display_mode:hover li,
+.display_mode:focus li
+{ display: block; }
 
 /* Highlight and bold on hover */
 button:hover,
@@ -304,7 +268,7 @@ a.color_options img {max-height: 3em;}
 
 /*
 ====================
-7. Element stack order (z-index)
+6. Element stack order (z-index)
 ====================
 */
 #display_options {z-index: 5}
@@ -312,29 +276,74 @@ a.color_options img {max-height: 3em;}
 textarea {z-index: 3}
 #output_wrapper {z-index: 2}
 
+/*
+
+
+====================
+7. Text styles
+    Headings, p, li
+====================
+*/
+
+#header_tagline,
+#display_options,
+#howto h2
+{color: #666}
+
+header,
+footer,
+.display_mode
+{color: white;}
+
+#display_options h3 {padding: 0.5em;}
+
+h1, h2, h3 {
+    font-weight: normal;
+    font-variant: small-caps;
+    font-size: 1.2em;
+}
+
+h1 { font-size: 1.5em; }
+
+h4 { font-size: 1em;}
+
+li, p { 
+	clear: both;
+	font-size: 0.9em;
+	padding: 0.5em;
+}
+
+#display_options li {padding: 0;}
+
 
 /* 
 ====================
 8. Media Queries
 ====================
 */
-/* mobile portrait */
+/* Starts at mobile portrait */
+/* mobile landscape */
 @media screen and (min-width:600px)
 {
     main,
     article { margin: auto 1em; }
+
     #howto {
+        display: flex;
         flex-direction: row;
-        margin-bottom: 0.5em;
+        margin-bottom: 1em;
     }
+
+    #howto ul {flex: 1 1 50%;}
 }
 
+/* mobile landscape */
 @media only screen and (min-width: 760px)
 {
-    main,
-    article { margin: auto 2em; }
+
 }
 
+/*
 @media only screen and (min-width:769px)
 {
     body { 
@@ -371,3 +380,4 @@ textarea {z-index: 3}
         align-self: stretch;
     }
 }
+*/
