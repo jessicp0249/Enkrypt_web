@@ -29,7 +29,7 @@
     margin: 0;
     padding: 0;
     font-family: Trebuchet, Tahoma, sans-serif;
-    /* use box-sizing to make width property include padding, margin */
+    /* make width property include padding, margin */
     box-sizing: border-box;
 }
 
@@ -45,7 +45,6 @@ body {
 }
 
 main {
-    clear: both;
     flex: 2 0 auto;
     margin: 1em 0.5em;
 }
@@ -141,6 +140,9 @@ Output styles
     padding: 0.5em;
     border: 2px solid white;
     flex: 1 0 5rem;
+    /* Display svgs in rows*/
+    display: flex;
+    flex-wrap: wrap;
 }
 /* expands wrapper so svgs don't overflow */
 #output_wrapper::after {
@@ -148,13 +150,12 @@ Output styles
     clear: both;
     display: table;
 }
-/* Display svg symbols in rows*/
-#output_wrapper svg {float: left;}
 
 /*
 Input styles
 */
 #input_wrapper {margin: 1.5em 0;}
+
 textarea {
     width: 100%;
     font-size: 0.9em;
@@ -168,17 +169,23 @@ textarea {
 5. Buttons and clickable menu options
 ====================
 */
-/* Display Options menu container */
+/* Wrappers for drop-down menus and input buttons */
+#input_button_wrapper,
 #display_options {
-    margin-bottom: 0.25em;
-    padding: 0.25em;
-}
-
-#display_options nav {
-    /* keeps flexbox from expanding with dropdown menu*/
-    height: 4em;
+	padding: 2px;
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
     display: flex;
 }
+
+#display_options {
+    margin-bottom: 0.25em;
+	/* keep flexbox from expanding with dropdown menu*/
+    height: 4.5em;
+}
+
+#display_options li {padding: 0;}
 
 /*
 Buttons and drop-down menu headers
@@ -193,7 +200,6 @@ button {
     padding: 0.5em;
     display: block;
     border: none;
-    font-size: 0.9em;
     color: black;
     background-color: white;
 }
@@ -202,16 +208,10 @@ button {
 Drop-down menu headers
 */
 .display_mode {
-    padding: 0.5em 1em 0;
+    padding: 0.5em 1em;
     color: white;
     background-color: #666;
     list-style: none;
-}
-
-.display_mode h4 {
-    text-align: center;
-    font-size: 0.9em;
-    margin: 0.25em 0;
 }
 
 /* Drop-down menu options */
@@ -219,6 +219,8 @@ Drop-down menu headers
     display: none;
     background-color: #ccc;
 }
+
+.display_mode h4 {margin: 0.25em;}
 
 #size_mode, #color_mode {padding: 0;}
 
@@ -253,17 +255,6 @@ li:hover a img
 a.color_options { padding: 1px 0; }
 a.color_options img {max-height: 3em;}
 
-#input_button_wrapper,
-#display_options {
-    border: 2px solid white;
-    border-radius: 10px;
-    text-align: center;
-}
-
-#input_button_wrapper {
-    padding: 2px;
-    display: flex;
-}
 
 
 /*
@@ -271,10 +262,11 @@ a.color_options img {max-height: 3em;}
 6. Element stack order (z-index)
 ====================
 */
-#display_options {z-index: 5}
-#input_button_wrapper {z-index: 4}
-textarea {z-index: 3}
-#output_wrapper {z-index: 2}
+#display_options {z-index: 5;}
+#input_button_wrapper {z-index: 4;}
+textarea {z-index: 3;}
+#output_wrapper {z-index: 2;}
+#output_wrapper svg {z-index: 1;}
 
 /*
 
@@ -286,7 +278,6 @@ textarea {z-index: 3}
 */
 
 #header_tagline,
-#display_options,
 #howto h2
 {color: #666}
 
@@ -294,8 +285,6 @@ header,
 footer,
 .display_mode
 {color: white;}
-
-#display_options h3 {padding: 0.5em;}
 
 h1, h2, h3 {
     font-weight: normal;
@@ -305,15 +294,13 @@ h1, h2, h3 {
 
 h1 { font-size: 1.5em; }
 
-h4 { font-size: 1em;}
+h4 { font-size: 0.9em;}
 
 li, p { 
 	clear: both;
 	font-size: 0.9em;
 	padding: 0.5em;
 }
-
-#display_options li {padding: 0;}
 
 
 /* 
@@ -329,12 +316,13 @@ li, p {
     article { margin: auto 1em; }
 
     #howto {
+    	margin-bottom: 1em;
         display: flex;
         flex-direction: row;
-        margin-bottom: 1em;
     }
 
     #howto ul {flex: 1 1 50%;}
+
 }
 
 /* mobile landscape */

@@ -269,6 +269,7 @@ var symbolToSvg = function(eSymbol, selector)
 	}
 };
 
+
 // "EnKrypt!" button
 var encryptInput = function()
 {
@@ -332,6 +333,3 @@ $(document).ready(function()
 	});	// end click for size options
 
 });	// end ready
-
-
-// FIXME: Modifiers must be on the same line as the previous ESymbol

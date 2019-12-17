@@ -6,7 +6,14 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="enkrypt_html_jquery.js"></script>
+    <!--
+        <script type="text/javascript" src="enkrypt_html_jquery.js"></script>
+    -->
+
+    <script type="text/javascript" src="scripts/svg_array.js"></script>
+    <script type="text/javascript" src="scripts/esymbol_estring.js"></script>
+    <script type="text/javascript" src="scripts/enkrypt.js"></script>
+
     <link rel="stylesheet" href="styles/stylesheet_responsive.css">
     <link id="color_styles" rel="stylesheet" type="text/css" href="styles/colors_default.css">
     <style id="size_styles" type="text/css">
@@ -45,41 +52,38 @@
     <main>
         <aside>
             <div id="display_options">
-                <h3>Display Options</h3>
-                <nav>
-                    <ul class="display_mode">
-                        <h4>SIZE</h4>
-                        <p id="size_mode">Default</p>
-                        <li>
-                            <a class="size_options" id="smaller" href="#">Smaller</a>
-                        </li>
-                        <li>
-                            <a class="size_options" id="default_size" href="#">Default</a>
-                        </li>
-                        <li>
-                            <a class="size_options" id="bigger" href="#">Bigger</a>
-                        </li>
-                        <li>
-                            <a class="size_options" id="biggest" href="#">Biggest</a>
-                        </li>
-                    </ul>
-                    <ul class="display_mode">
-                        <h4>COLOR</h4>
-                        <p id="color_mode">Default</p>
-                        <li>
-                            <a class="color_options" id="colors_default" href="#"><img src="images/display_default.svg" alt="Default colors"></a>
-                        </li>
-                        <li>
-                            <a class="color_options" id="colors_contrast" href="#"><img src="images/display_contrast.svg" alt="High contrast"></a>
-                        </li>
-                        <li>
-                            <a class="color_options" id="colors_soft" href="#"><img src="images/display_soft_light.svg" alt="Soft colors"></a>
-                        </li>
-                        <li>
-                            <a class="color_options" id="colors_bnw" href="#"><img src="images/display_bnw.svg" alt="Black and white"></a>
-                        </li>
-                    </ul>
-                </nav>
+                <ul class="display_mode">
+                    <h4>SIZE</h4>
+                    <p id="size_mode">Default</p>
+                    <li>
+                        <a class="size_options" id="smaller" href="#">Smaller</a>
+                    </li>
+                    <li>
+                        <a class="size_options" id="default_size" href="#">Default</a>
+                    </li>
+                    <li>
+                        <a class="size_options" id="bigger" href="#">Bigger</a>
+                    </li>
+                    <li>
+                        <a class="size_options" id="biggest" href="#">Biggest</a>
+                    </li>
+                </ul>
+                <ul class="display_mode">
+                    <h4>COLOR</h4>
+                    <p id="color_mode">Default</p>
+                    <li>
+                        <a class="color_options" id="colors_default" href="#"><img src="images/display_default.svg" alt="Default colors"></a>
+                    </li>
+                    <li>
+                        <a class="color_options" id="colors_contrast" href="#"><img src="images/display_contrast.svg" alt="High contrast"></a>
+                    </li>
+                    <li>
+                        <a class="color_options" id="colors_soft" href="#"><img src="images/display_soft_light.svg" alt="Soft colors"></a>
+                    </li>
+                    <li>
+                        <a class="color_options" id="colors_bnw" href="#"><img src="images/display_bnw.svg" alt="Black and white"></a>
+                    </li>
+                </ul>
             </div>
             <div id="output_wrapper" class="bg">
                 <p>Encrypted message will appear here.</p>
